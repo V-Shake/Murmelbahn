@@ -77,11 +77,12 @@ function scrollEndless(point) {
   mouse.setOffset(off);
 }
 
+// schubsen
 function keyPressed(event) {
   switch (keyCode) {
     case 32:
       event.preventDefault();
-      Matter.Body.applyForce(murmel.body, murmel.body.position, { x: 0.5, y: 0 });
+      Matter.Body.applyForce(murmel.body, murmel.body.position, { x: 0.15, y: 0 });
       break;
     default:
       console.log(keyCode);
