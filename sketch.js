@@ -93,4 +93,4 @@ function draw() {
   scrollEndless(murmel.body.position);
   blocks.forEach(block => block.draw());
   mouse.draw();
-} WOW
+}
