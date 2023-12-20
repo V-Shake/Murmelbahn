@@ -94,9 +94,5 @@ function draw() {
   scrollEndless(murmel.body.position);
   blocks.forEach(block => block.draw());
   mouse.draw();
-  //pushing
-  //meow
-  //test
-  //github test
-  //repo
+//test
 }
