@@ -62,7 +62,7 @@ function setup() {
   ));
   blocks.push(new BlockCore(world,
     {
-      x: dim.w - 100, y: 0, w: 100, h: 4500, color: 'blue',
+      x: dim.w - 100, y: 0, w: 100, h: 4500,
       trigger: () => { direction *= -1; }
     },
     { isStatic: true }
