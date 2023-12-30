@@ -72,7 +72,7 @@ class BlockCore {
       }
     } else {
       if (this.body.type == "composite") {
-        // TODO: Die Eigenschaft "bodies" ist für den Typ "Body" nicht vorhanden. ts(2339)
+        // TODO: Die Eigenschaft "bodies" ist fÃ¼r den Typ "Body" nicht vorhanden. ts(2339)
         for (let body of this.body.bodies) {
           this.drawVertices(body.vertices);
         }
