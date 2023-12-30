@@ -55,7 +55,7 @@ function setup() {
   // run the engine
   blocks.push(new BlockCore(world,
     {
-      x: 0, y: 0, w: 100, h: 4500, color: 'blue',
+      x: 0, y: 0, w: 100, h: 4500,
       trigger: () => { direction *= -1; }
     },
     { isStatic: true }
