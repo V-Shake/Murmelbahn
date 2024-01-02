@@ -41,6 +41,7 @@ class Ball extends Block {
    */
   constructor(world, attributes, options) {
     super(world, attributes, options);
+    this.ballSVG = loadImage('./assets/graphics/foreground/ball.svg')
   }
 
   addBody() {

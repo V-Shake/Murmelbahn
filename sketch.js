@@ -22,6 +22,11 @@ let direction = 0.2;
 
 let bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
 
+let ballSVG;
+
+function preload() {
+  ballSVG = loadImage('./assets/graphics/foreground/ball.svg'); // Replace with the actual path to your ball.svg file
+}
 
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
@@ -112,6 +117,9 @@ function draw() {
 
   // position canvas and translate coordinates
   scrollEndless(murmel.body.position);
+
+  // image(this.ballSVG, this.body.position.x - this.attributes.r, this.body.position.y - this.attributes.r, this.attributes.r * 2, this.attributes.r * 2);
+
 
   // animate attracted blocks
   blocks.forEach(block => block.draw());
