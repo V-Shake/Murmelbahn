@@ -20,6 +20,9 @@ let off = { x: 0, y: 0 };
 const dim = { w: 3840, h: 2160 };
 let direction = 0.2;
 
+let bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
+
+
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('thecanvas');
@@ -44,10 +47,13 @@ function setup() {
     var pairs = event.pairs;
     pairs.forEach((pair, i) => {
       if (pair.bodyA.label == 'Murmel') {
-        pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block)
+        pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block);
+        // Play the sound effect
+        bouncingSound.play();
       }
       if (pair.bodyB.label == 'Murmel') {
-        pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block)
+        pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block);
+        bouncingSound.play();
       }
     })
   })
