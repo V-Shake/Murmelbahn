@@ -118,8 +118,6 @@ function draw() {
   // position canvas and translate coordinates
   scrollEndless(murmel.body.position);
 
-  // image(this.ballSVG, this.body.position.x - this.attributes.r, this.body.position.y - this.attributes.r, this.attributes.r * 2, this.attributes.r * 2);
-
 
   // animate attracted blocks
   blocks.forEach(block => block.draw());
