@@ -24,7 +24,7 @@ function setup() {
   engine = Engine.create();
   world = engine.world;
 
-  new BlocksFromSVG(world, 'static.svg', blocks, { isStatic: true });
+  new BlocksFromSVG(world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true });
 
   blocks.push(new BlockCore(world,
     {
@@ -98,4 +98,5 @@ function draw() {
   //meow
   //test
   //github test
+  //fat cats
 }
