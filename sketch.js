@@ -25,7 +25,7 @@ let bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
 let ballSVG;
 
 function preload() {
-  ballSVG = loadImage('./assets/graphics/foreground/ball.svg'); // Replace with the actual path to your ball.svg file
+  ballSVG = loadImage('./assets/graphics/foreground/ball.svg'); 
 }
 
 function setup() {
@@ -74,7 +74,9 @@ function setup() {
   blocks.push(new BlockCore(world,
     {
       x: dim.w - 5, y: 0, w: 100, h: 4500,
-      trigger: () => { direction *= -1; }
+      trigger: () => { direction *= -1; 
+      console.log('Collision detected') 
+    }
     },
     { isStatic: true }
   ));
