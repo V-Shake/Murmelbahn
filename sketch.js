@@ -10,6 +10,9 @@ let world;
 let mouse;
 let isDrag = false;
 // an array to contain all the blocks created
+let bgX = 0; // Adjust this value to position the background image horizontally
+let bgY = 0; // Adjust this value to position the background image vertically
+
 let blocks = [];
 let murmel;
 
@@ -17,14 +20,18 @@ let canvasElem;
 let off = { x: 0, y: 0 };
 
 // das ist die Dimension des kompletten Levels 
-const dim = { w: 3840, h: 2160 };
+const dim = { w: 3840, h: 7200 };
 let direction = 0.2;
 
-let bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
 
+let bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
+let backgroundImage;
 let ballSVG;
 
+
 function preload() {
+  backgroundImage = loadImage('./assets/graphics/background/backdrop.jpg');
+  backgroundImage.resize(600, 1000)
   ballSVG = loadImage('./assets/graphics/foreground/ball.svg'); 
 }
 
@@ -43,7 +50,7 @@ function setup() {
   // the ball has a label and can react on collisions
   murmel = new Ball(world,
     { x: 300, y: 100, r: 25, color: 'green' },
-    { label: "Murmel", density: 0.004, restitution: 0.5, friction: 0, frictionAir: 0 }
+    { label: "Murmel", density: 0.02, restitution: 0.5, friction: 0, frictionAir: 0 }
   );
   blocks.push(murmel);
 
@@ -116,7 +123,9 @@ function keyPressed(event) {
 
 function draw() {
   clear();
-
+  let bgWidth = width; 
+  let bgHeight = height;
+  image(backgroundImage, 3840,7200, bgWidth, bgHeight);
   // position canvas and translate coordinates
   scrollEndless(murmel.body.position);
 
