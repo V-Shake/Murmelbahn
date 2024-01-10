@@ -15,7 +15,6 @@ let bgY = 0; // Adjust this value to position the background image vertically
 
 let blocks = [];
 let murmel;
-let ground;
 
 let canvasElem;
 let off = { x: 0, y: 0 };
@@ -46,13 +45,7 @@ function setup() {
   engine = Engine.create();
   world = engine.world;
 
-  // new BlocksFromSVG(world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true });
-  ground = new Block(
-    world,
-    { x: 0, y: 630, w: 1900, h: 50, color: 'grey'},
-    {isStatic: true}
-  );
-
+  new BlocksFromSVG(world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true });
 
   // the ball has a label and can react on collisions
   murmel = new Ball(world,
@@ -139,5 +132,4 @@ function draw() {
 
   // animate attracted blocks
   blocks.forEach(block => block.draw());
-  ground.draw();
 }
