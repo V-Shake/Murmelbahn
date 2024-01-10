@@ -49,8 +49,8 @@ function setup() {
 
   // the ball has a label and can react on collisions
   murmel = new Ball(world,
-    { x: 300, y: 100, r: 25, color: 'green' },
-    { label: "Murmel", density: 0.02, restitution: 0.5, friction: 0, frictionAir: 0 }
+    { x: 300, y: 100, r: 60, color: 'green' },
+    { label: "Murmel", density: 0.004, restitution: 0.5, friction: 0, frictionAir: 0 }
   );
   blocks.push(murmel);
 
