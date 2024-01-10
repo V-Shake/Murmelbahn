@@ -1,8 +1,82 @@
-<svg width="3840" height="2160" viewBox="0 0 3840 2160" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M306 188.5C543 260 743 460 918.5 424C1094 388 1769.5 704.5 1832.5 632.5C1895.5 560.5 2333.5 478 2478 471.5C2622.5 465 3398.5 399.5 3373.5 613.5C3348.5 827.5 1832.5 767 1832.5 767H7V551V258C7 258 69.0001 117 306 188.5Z" fill="#FF0000"/>
-<path d="M2368.5 1165C2766.5 1387.5 3637.12 1095.54 3839.88 726.5V1136.17V1712.67H467.5C467.5 1712.67 1970.5 942.5 2368.5 1165Z" fill="#FF0000"/>
-<rect width="3840" height="40" fill="#A6FAF5"/>
-<rect y="2120" width="3840" height="40" fill="#A6FAF5"/>
-<rect width="40" height="2160" fill="#A6FAF5"/>
-<rect x="3800" width="40" height="2160" fill="#A6FAF5"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 3840 7200" style="enable-background:new 0 0 3840 7200;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FF9A7C;}
+	.st1{fill:url(#);}
+	.st2{fill:#A1E6E2;}
+	.st3{fill:#93B79A;}
+	.st4{fill:#C6824F;}
+	.st5{fill:#916423;}
+	.st6{fill:#FFC873;}
+	.st7{fill:#A67CC6;}
+	.st8{fill:#664491;}
+	.st9{fill:#E0B0FF;}
+	.st10{opacity:0.7;fill:none;}
+	.st11{opacity:0.7;fill:#53371F;}
+	.st12{opacity:0.7;fill:#A67CC6;}
+	.st13{opacity:0.7;fill:#664491;}
+	.st14{opacity:0.7;fill:#E0B0FF;}
+	.st15{opacity:0.7;}
+	.st16{fill:none;}
+	.st17{fill:#53371F;}
+	.st18{fill:#9497C6;}
+	.st19{fill:#4C5591;}
+	.st20{fill:#95C2FF;}
+	.st21{fill:#C65A9B;}
+	.st22{fill:#893491;}
+	.st23{fill:#FF88B2;}
+	.st24{fill:#C66C6A;}
+	.st25{fill:#913E5B;}
+	.st26{fill:#FFB28D;}
+	.st27{fill:#C65E53;}
+	.st28{fill:#915140;}
+	.st29{fill:#FFC9A7;}
+	.st30{fill:#808080;}
+	.st31{fill:#4E1115;}
+	.st32{fill:#832F35;}
+	.st33{fill:#B3B3B3;}
+	.st34{fill:#3B5B4B;}
+	.st35{fill:#4D6950;}
+	.st36{fill:#59775C;}
+	.st37{fill:#A47AB6;}
+	.st38{fill:#896EB1;}
+	.st39{fill:#6D4438;}
+	.st40{fill:#8D614E;}
+	.st41{fill:#88A8B3;}
+	.st42{fill:#F16A7F;}
+	.st43{fill:#323033;}
+	.st44{fill:#F26A4A;}
+	.st45{fill:#FDC35B;}
+	.st46{fill:#89A268;}
+	.st47{fill:#328E66;}
+	.st48{fill:#10A0AA;}
+	.st49{fill:#006B83;}
+	.st50{fill:#885CA6;}
+	.st51{fill:#BC5264;}
+	.st52{fill:#BD524D;}
+	.st53{fill:#F7914C;}
+	.st54{fill:#5A7D51;}
+	.st55{fill:#30573D;}
+	.st56{fill:#2F4B6A;}
+	.st57{fill:#65427C;}
+	.st58{fill:#9D3F52;}
+	.st59{fill:#F1474D;}
+	.st60{fill:none;stroke:#999999;stroke-width:7;stroke-miterlimit:10;}
+	.st61{fill:none;stroke:#666666;stroke-width:7;stroke-miterlimit:10;}
+	.st62{fill:#F9BEBF;}
+	.st63{fill:#FED5AA;}
+	.st64{fill:#0000FF;}
+</style>
+<g id="Layer_2">
+</g>
+<g id="Layer_1">
+	<rect y="605" class="st64" width="1900" height="16"/>
+	<rect x="2431" y="604.63" class="st64" width="920" height="16"/>
+	<rect x="571" y="1081" class="st64" width="1391" height="16"/>
+	<rect x="2422" y="1081" class="st64" width="1418" height="16"/>
+	<rect y="1584" class="st64" width="3386" height="16"/>
+	<rect x="476" y="2065" class="st64" width="3363" height="16"/>
+</g>
 </svg>
