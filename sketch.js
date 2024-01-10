@@ -27,12 +27,18 @@ let direction = 0.2;
 let bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
 let backgroundImage;
 let ballSVG;
+let fallingBookImg; 
+let fallingLance = [];
+
+
 
 
 function preload() {
   backgroundImage = loadImage('./assets/graphics/background/backdrop.jpg');
   backgroundImage.resize(600, 1000)
   ballSVG = loadImage('./assets/graphics/foreground/ball.svg'); 
+  fallingBookImg = loadImage('./assets/graphics/foreground/book.jpg');
+
 }
 
 function setup() {
