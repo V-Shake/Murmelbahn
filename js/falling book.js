@@ -18,4 +18,4 @@ function createFallingBook(x, y, force) {
       },
       { isStatic: true, label: "Book"}
     ));
-  }
+  } 
