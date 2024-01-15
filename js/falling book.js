@@ -6,7 +6,7 @@ function createFallingBook(x, y, force) {
         y: y,
         w: 84,
         h: 582,
-        image: BookImg,
+        image: bookImg,
         isTriggered: false,  // Neue Eigenschaft für den Trigger-Status hinzufügen
         trigger: (fallingBook, block) => {
           if (!block.isTriggered) {  // Überprüfen, ob der Trigger bereits ausgelöst wurde
@@ -16,6 +16,7 @@ function createFallingBook(x, y, force) {
           }
         }
       },
-      { isStatic: true, label: "Book"}
+      { isStatic: true, label: "book"}
     ));
   }
+  
