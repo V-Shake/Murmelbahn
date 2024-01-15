@@ -26,7 +26,7 @@ let direction = 0.2;
 
 let bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
 let backgroundImage;
-let ballSVG;
+// let ballSVG;
 let fallingBookImg; 
 let fallingLance = [];
 
@@ -36,7 +36,7 @@ let fallingLance = [];
 function preload() {
   backgroundImage = loadImage('./assets/graphics/background/backdrop.jpg');
   backgroundImage.resize(600, 1000)
-  ballSVG = loadImage('./assets/graphics/foreground/ball.svg'); 
+  // ballSVG = loadImage('./assets/graphics/foreground/ball.svg'); 
   fallingBookImg = loadImage('./assets/graphics/foreground/book.jpg');
 
 }
@@ -52,6 +52,9 @@ function setup() {
   world = engine.world;
 
   new BlocksFromSVG(world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true });
+  console.log(blocks);
+  // let blocks[9] = new MusicalBlock(world, blocks[9].options)
+  // new BlocksFromSVG(world, './assets/graphics/foreground/xylophone ground.svg', blocks, { isStatic: true });
 
   // the ball has a label and can react on collisions
   murmel = new Ball(world,
@@ -62,17 +65,41 @@ function setup() {
 
   // process collisions - check whether block "Murmel" hits another Block
   Events.on(engine, 'collisionStart', function (event) {
+    let sound;
     var pairs = event.pairs;
     pairs.forEach((pair, i) => {
       if (pair.bodyA.label == 'Murmel') {
         pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block);
-        // Play the sound effect
-        bouncingSound.play();
+        // Play the sound effect      
+        // bouncingSound.play();
+        console.log(pair.bodyA.plugin.block.constructor.name);
+        switch (pair.bodyA.plugin.block.constructor.name) {
+          case 'MusicalBlock':
+            sound = pair.bodyA.plugin.block.sound;
+            console.log('Musical');
+            break;
+          default:
+            console.log('defaultbouncing');
+            sound = bouncingSound;
+            break;
+        }
       }
-      if (pair.bodyB.label == 'Murmel') {
-        pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block);
-        bouncingSound.play();
-      }
+      // console.log(pair.bodyB.plugin.block.constructor.name);
+      // if (pair.bodyB.label == 'Murmel') {
+      //   pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block);
+      //   // bouncingSound.play();
+      //   switch (pair.bodyB.plugin.block.constructor.name) {
+      //     case 'MusicalBlock':
+      //       sound = pair.bodyB.plugin.block.sound;
+      //       console.log('Musical');
+      //       break;
+      //     default:
+      //       console.log('defaultbouncing');
+      //       sound = bouncingSound;
+      //       break;
+      //   }
+      // }
+      sound.play();
     })
   })
 

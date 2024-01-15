@@ -68,6 +68,7 @@
 	.st62{fill:#F9BEBF;}
 	.st63{fill:#FED5AA;}
 	.st64{fill:#0000FF;}
+	.st65{fill:#0001FF;}
 </style>
 <g id="Layer_2">
 </g>
@@ -78,5 +79,6 @@
 	<rect x="2422" y="1081" class="st64" width="1418" height="16"/>
 	<rect y="1584" class="st64" width="3386" height="16"/>
 	<rect x="476" y="2065" class="st64" width="3363" height="16"/>
+	<rect y="2589" class="st65" width="3386" height="16"/>
 </g>
 </svg>

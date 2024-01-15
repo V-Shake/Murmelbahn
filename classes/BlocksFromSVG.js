@@ -68,16 +68,30 @@ class BlocksFromSVG {
         options.angle = radians(attributes.transform.split(/[ \(\)]/)[1]);
       }
       if (type == 'rect') {
-        block = new Block(
-          this.world, {
-            x: (attributes.x || 0) + attributes.width / 2,
-            y: (attributes.y || 0) + attributes.height / 2,
-            w: attributes.width,
-            h: attributes.height,
-            color: attributes.fill,
-          },
-          options
-        );
+        if (attributes.class == 'st65'){
+          // Special case: st65 is the musicalground
+          block = new MusicalBlock(
+            this.world, {
+              x: (attributes.x || 0) + attributes.width / 2,
+              y: (attributes.y || 0) + attributes.height / 2,
+              w: attributes.width,
+              h: attributes.height,
+              color: attributes.fill,
+            },
+            options
+          );
+        } else{
+          block = new Block(
+            this.world, {
+              x: (attributes.x || 0) + attributes.width / 2,
+              y: (attributes.y || 0) + attributes.height / 2,
+              w: attributes.width,
+              h: attributes.height,
+              color: attributes.fill,
+            },
+            options
+          );
+        }
         if (options.angle) {
           Matter.Body.translate(block.body, {
             x: attributes.height * Math.sin(-options.angle) + attributes.width * Math.sin(1 - options.angle),
