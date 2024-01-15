@@ -93,10 +93,10 @@ function setup() {
         pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block);
         // Play the sound effect      
         // bouncingSound.play();
-        console.log(pair.bodyA.plugin.block.constructor.name);
-        switch (pair.bodyA.plugin.block.constructor.name) {
+        console.log(pair.bodyB.plugin.block.constructor.name);
+        switch (pair.bodyB.plugin.block.constructor.name) {
           case 'MusicalBlock':
-            sound = pair.bodyA.plugin.block.sound;
+            sound = pair.bodyB.plugin.block.sound;
             console.log('Musical');
             break;
           default:
