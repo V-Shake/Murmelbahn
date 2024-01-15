@@ -4,14 +4,12 @@ const Bodies = Matter.Bodies;
 const Events = Matter.Events;
 const World = Matter.World;
 
-// the Matter engine to animate the world
 let engine;
 let world;
 let mouse;
 let isDrag = false;
-// an array to contain all the blocks created
-let bgX = 0; // Adjust this value to position the background image horizontally
-let bgY = 0; // Adjust this value to position the background image vertically
+let bgX = 0;
+let bgY = 0;
 
 let blocks = [];
 let murmel;
@@ -19,33 +17,27 @@ let murmel;
 let canvasElem;
 let off = { x: 0, y: 0 };
 
-// das ist die Dimension des kompletten Levels 
 const dim = { w: 3840, h: 7200 };
 let direction = 0.2;
 
-
 let bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
 let backgroundImage;
-// let ballSVG;
-let fallingBookImg; 
-let fallingLance = [];
-
-
-
+let ballSVG;
+let bookImg;
+let fallingBook = [];
 
 function preload() {
   backgroundImage = loadImage('./assets/graphics/background/backdrop.jpg');
-  backgroundImage.resize(600, 1000)
-  // ballSVG = loadImage('./assets/graphics/foreground/ball.svg'); 
-  fallingBookImg = loadImage('./assets/graphics/foreground/book.jpg');
-
+  backgroundImage.resize(600, 1000);
+  ballSVG = loadImage('./assets/graphics/foreground/ball.svg');
+  fallingBookImg = loadImage('./assets/graphics/foreground/book.png');
 }
+
 
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('thecanvas');
 
-  // Das ist nötig für den 'Endless Canvas'
   canvasElem = document.getElementById('thecanvas');
 
   engine = Engine.create();
@@ -56,14 +48,43 @@ function setup() {
   // let blocks[9] = new MusicalBlock(world, blocks[9].options)
   // new BlocksFromSVG(world, './assets/graphics/foreground/xylophone ground.svg', blocks, { isStatic: true });
 
-  // the ball has a label and can react on collisions
   murmel = new Ball(world,
     { x: 300, y: 100, r: 60, color: 'green' },
     { label: "Murmel", density: 0.004, restitution: 0.5, friction: 0, frictionAir: 0 }
   );
+  
+  createFallingBook(1780, 250, { force: { x: 0, y: 0.005 } });
+
+  blocks.push(new BlockCore(world, { x: -dim.d / 2, y: dim.h / 2, w: dim.d, h: dim.h, color: 'black' }, { isStatic: true }));
+  blocks.push(new BlockCore(world, { x: dim.w + dim.d / 2, y: dim.h / 2, w: dim.d, h: dim.h, color: 'black' }, { isStatic: true }));
+
+  // Trigger block on the left
+  blocks.push(new BlockCore(world,
+    {
+      x: 0, y: 0, w: 100, h: 4500,
+      trigger: () => {
+        direction *= -1;
+        console.log('Left Trigger');
+      }
+    },
+    { isStatic: true }
+  ));
+
+  // Trigger block on the right
+  blocks.push(new BlockCore(world,
+    {
+      x: dim.w - 5, y: 0, w: 100, h: 4500,
+      trigger: () => {
+        direction *= -1;
+        console.log('Right Trigger');
+      }
+    },
+    { isStatic: true }
+  ));
+
   blocks.push(murmel);
 
-  // process collisions - check whether block "Murmel" hits another Block
+  // Set up collision events
   Events.on(engine, 'collisionStart', function (event) {
     let sound;
     var pairs = event.pairs;
@@ -101,38 +122,32 @@ function setup() {
       // }
       sound.play();
     })
-  })
+  });
 
-  // run the engine
-  blocks.push(new BlockCore(world,
-    {
-      x: 0, y: 0, w: 100, h: 4500,
-      trigger: () => { direction *= -1; }
-    },
-    { isStatic: true }
-  ));
-  blocks.push(new BlockCore(world,
-    {
-      x: dim.w - 5, y: 0, w: 100, h: 4500,
-      trigger: () => { direction *= -1; 
-      console.log('Collision detected') 
-    }
-    },
-    { isStatic: true }
-  ));
   Runner.run(engine);
 }
+function createFallingBook(x, y, options = {}) {
+  const bookWidth = 84.39;
+  const bookHeight = 495;
 
+  // Create a rectangular body for the falling book
+  let fallingBlock = new Block(
+    world,
+    { x, y, w: bookWidth, h: bookHeight, image: fallingBookImg },
+    { friction: 4, density: 0.0005, angularVelocity: Math.random() * 0.1, ...options }
+  );
+  fallingBook.push(fallingBlock);
+
+  // Apply an initial force to make the book fall
+  const force = options.force || { x: 0, y: 0.01 }; // Adjust the force as needed
+  Matter.Body.applyForce(fallingBlock.body, fallingBlock.body.position, force);
+}
 function scrollEndless(point) {
-  // wohin muss verschoben werden damit point wenn möglich in der Mitte bleibt
   off = { x: Math.min(Math.max(0, point.x - windowWidth / 2), dim.w - windowWidth), y: Math.min(Math.max(0, point.y - windowHeight / 2), dim.h - windowHeight) };
   canvasElem.style.left = Math.round(off.x) + 'px';
   canvasElem.style.top = Math.round(off.y) + 'px';
-  // korrigiert die Koordinaten
   translate(-off.x, -off.y);
-  // verschiebt den ganzen Viewport
   window.scrollTo(off.x, off.y);
-  // Matter mouse needs the offset as well
 }
 
 function keyPressed(event) {
@@ -141,13 +156,11 @@ function keyPressed(event) {
       console.log("Space");
       event.preventDefault();
       Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction, y: 0 });
-      // Matter. Body.scale(murmel.body, 1.5, 1.5);
       break;
     case 66:
       console.log("Space");
       event.preventDefault();
       Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * -1, y: 0 });
-      // Matter. Body.scale(murmel.body, 1.5, 1.5);
       break;
     default:
       console.log(keyCode);
@@ -156,13 +169,10 @@ function keyPressed(event) {
 
 function draw() {
   clear();
-  let bgWidth = width; 
+  let bgWidth = width;
   let bgHeight = height;
-  image(backgroundImage, 3840,7200, bgWidth, bgHeight);
-  // position canvas and translate coordinates
+  image(backgroundImage, 3840, 7200, bgWidth, bgHeight);
   scrollEndless(murmel.body.position);
-
-
-  // animate attracted blocks
   blocks.forEach(block => block.draw());
+  fallingBook.forEach(block => block.draw());
 }
