@@ -58,9 +58,7 @@ function setup() {
   createFallingBook(2800, 950, { force: { x: 0, y: 0.04 } });
   createFallingBook(2823, 1976 , { force: { x: 0, y: 0.005 } });
   createFallingBook(2300, 1976 , { force: { x: 0, y: 0.005 } });
-  createFallingBook(2500, 1976 , { force: { x: 0, y: 0.005 } });
   createFallingBook(2100, 1976 , { force: { x: 0, y: 0.005 } });
-  createFallingBook(2700, 1976 , { force: { x: 0, y: 0.005 } });
   createFallingBook(0, 1309 , { force: { x: 0, y: 0.005 } });
 
 
