@@ -139,7 +139,7 @@ function setup() {
   Runner.run(engine);
 }
 function createFallingBook(x, y, options = {}) {
-  const bookWidth =10;
+  const bookWidth =15;
   const bookHeight = 495;
 
   // Create a rectangular body for the falling book
