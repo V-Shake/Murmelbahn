@@ -71,7 +71,7 @@ function setup() {
   // Trigger block on the left
   blocks.push(new BlockCore(world,
     {
-      x: 0, y: 0, w: 100, h: 4500,
+      x: 0, y: 0, w: 100, h: 7200,
       trigger: () => {
         direction *= -1;
         console.log('Left Trigger');
@@ -83,7 +83,7 @@ function setup() {
   // Trigger block on the right
   blocks.push(new BlockCore(world,
     {
-      x: dim.w - 5, y: 0, w: 100, h: 4500,
+      x: dim.w - 5, y: 0, w: 100, h: 7200,
       trigger: () => {
         direction *= -1;
         console.log('Right Trigger');
