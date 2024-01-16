@@ -44,6 +44,9 @@ function setup() {
   world = engine.world;
 
   new BlocksFromSVG(world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true });
+  console.log(blocks);
+  // let blocks[9] = new MusicalBlock(world, blocks[9].options)
+  // new BlocksFromSVG(world, './assets/graphics/foreground/xylophone ground.svg', blocks, { isStatic: true });
 
   murmel = new Ball(world,
     { x: 300, y: 100, r: 60, color: 'green' },
@@ -95,16 +98,41 @@ function setup() {
 
   // Set up collision events
   Events.on(engine, 'collisionStart', function (event) {
+    let sound;
     var pairs = event.pairs;
     pairs.forEach((pair, i) => {
       if (pair.bodyA.label == 'Murmel') {
         pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block);
-        bouncingSound.play();
+        // Play the sound effect      
+        // bouncingSound.play();
+        console.log(pair.bodyB.plugin.block.constructor.name);
+        switch (pair.bodyB.plugin.block.constructor.name) {
+          case 'MusicalBlock':
+            sound = pair.bodyB.plugin.block.sound;
+            console.log('Musical');
+            break;
+          default:
+            console.log('defaultbouncing');
+            sound = bouncingSound;
+            break;
+        }
       }
-      if (pair.bodyB.label == 'Murmel') {
-        pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block);
-        bouncingSound.play();
-      }
+      // console.log(pair.bodyB.plugin.block.constructor.name);
+      // if (pair.bodyB.label == 'Murmel') {
+      //   pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block);
+      //   // bouncingSound.play();
+      //   switch (pair.bodyB.plugin.block.constructor.name) {
+      //     case 'MusicalBlock':
+      //       sound = pair.bodyB.plugin.block.sound;
+      //       console.log('Musical');
+      //       break;
+      //     default:
+      //       console.log('defaultbouncing');
+      //       sound = bouncingSound;
+      //       break;
+      //   }
+      // }
+      sound.play();
     })
   });
 
