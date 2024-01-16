@@ -47,10 +47,22 @@ function setup() {
 
   murmel = new Ball(world,
     { x: 300, y: 100, r: 60, color: 'green' },
-    { label: "Murmel", density: 0.004, restitution: 0.5, friction: 0, frictionAir: 0 }
+    { label: "Murmel", density: 0.003, restitution: 0.5, friction: 0, frictionAir: 0 }
   );
   
-  createFallingBook(1780, 250, { force: { x: 0, y: 0.005 } });
+  createFallingBook(1850, 250, { force: { x: 0, y: 0.005 } });
+  createFallingBook(2479, 950, { force: { x: 0, y: -0.005 } });
+  createFallingBook(2800, 950, { force: { x: 0, y: 0.04 } });
+  createFallingBook(2823, 1976 , { force: { x: 0, y: 0.005 } });
+  createFallingBook(2300, 1976 , { force: { x: 0, y: 0.005 } });
+  createFallingBook(2500, 1976 , { force: { x: 0, y: 0.005 } });
+  createFallingBook(2100, 1976 , { force: { x: 0, y: 0.005 } });
+  createFallingBook(2700, 1976 , { force: { x: 0, y: 0.005 } });
+  createFallingBook(0, 1309 , { force: { x: 0, y: 0.005 } });
+
+
+
+
 
   blocks.push(new BlockCore(world, { x: -dim.d / 2, y: dim.h / 2, w: dim.d, h: dim.h, color: 'black' }, { isStatic: true }));
   blocks.push(new BlockCore(world, { x: dim.w + dim.d / 2, y: dim.h / 2, w: dim.d, h: dim.h, color: 'black' }, { isStatic: true }));
@@ -99,19 +111,19 @@ function setup() {
   Runner.run(engine);
 }
 function createFallingBook(x, y, options = {}) {
-  const bookWidth = 84.39;
+  const bookWidth =10;
   const bookHeight = 495;
 
   // Create a rectangular body for the falling book
   let fallingBlock = new Block(
     world,
     { x, y, w: bookWidth, h: bookHeight, image: fallingBookImg },
-    { friction: 4, density: 0.0005, angularVelocity: Math.random() * 0.1, ...options }
+    { friction: 0.5, density: 0.0005, angularVelocity: 0.01, ...options }
   );
   fallingBook.push(fallingBlock);
 
   // Apply an initial force to make the book fall
-  const force = options.force || { x: 0, y: 0.01 }; // Adjust the force as needed
+  const force = options.force || { x: 0, y: 0.005 }; // Adjust the force as needed
   Matter.Body.applyForce(fallingBlock.body, fallingBlock.body.position, force);
 }
 function scrollEndless(point) {
