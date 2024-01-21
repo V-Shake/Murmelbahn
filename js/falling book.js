@@ -4,8 +4,8 @@ function createFallingBook(x, y, force) {
     {
       x: x,
       y: y,
-      w: 84,
-      h: 582,
+      w: 60,
+      h: 487,
       image: bookImg,
       isTriggered: false,  // Neue Eigenschaft für den Trigger-Status hinzufügen
       trigger: (fallingBook, block) => {
