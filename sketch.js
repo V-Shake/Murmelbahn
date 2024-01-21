@@ -130,7 +130,7 @@ function setup() {
       //       break;
       //   }
       // }
-      sound.play();
+      // sound.play();     
     })
   });
 
@@ -164,6 +164,7 @@ function keyPressed(event) {
   switch (keyCode) {
     case 32:
       console.log("Space");
+      bouncingSound.play();
       event.preventDefault();
       Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction, y: 0 });
       break;
