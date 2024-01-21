@@ -6,12 +6,12 @@ const sounds = {
   so: new Audio('./assets/audio/so.mp3'),
   la: new Audio('./assets/audio/la.mp3'),
   ti: new Audio('./assets/audio/ti.mp3'),
-  do1: new Audio('./assets/audio/do1.mp3'),
+  do1: new Audio('./assets/audio/dom.mp3'),
 };
 
 function playSoundsSequentially() {
   // List of sound keys in the desired sequence
-  const soundSequence = ['do', 're', 'mi', 'fa', 'so', 'la', 'ti', 'do1'];
+  const soundSequence = ['do', 're', 'mi', 'fa', 'so', 'la', 'ti', 'dom'];
 
   // Helper function to play the next sound in the sequence
   function playNextSound(index) {
