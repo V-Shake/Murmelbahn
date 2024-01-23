@@ -3,8 +3,6 @@ const Runner = Matter.Runner;
 const Bodies = Matter.Bodies;
 const Events = Matter.Events;
 const World = Matter.World;
-const Constraint = Matter.Constraint; // Add this line to include Constraint
-
 let engine;
 let world;
 let mouse;
@@ -13,10 +11,8 @@ let isDrag = false;
 let bgX = 0;
 let bgY = 0;
 let active = -1;
-let invisibleRectangle;
-let hangingBox; // Variable to store the hanging box
-let stringConstraint;
-let pendulum;
+let carrot;
+
 let blocks = [];
 let murmel;
 let bgMusic;
@@ -32,18 +28,17 @@ let backgroundImage;
 let ballSVG;
 let bookImg;
 let fallingBook = [];
-let rabbitImg;
-const numRabbits = 3;
+/* let rabbitImg;
+ */const numRabbits = 3;
 const rabbits = [];
 
 const rabbit = {
-  x: 547,
-  y: 1200,
+  x: 347,
+  y: 600,
   width: 356,
   height: 749,
   speed: 2,
-  startY:500,
-  endY: 1200
+  endY: 900
 };
 
 let sounds = [
@@ -120,42 +115,6 @@ function setup() {
   ));
 
   blocks.push(murmel);
-  hangingBox = new Block(
-    world, {
-      x: 750, // Adjust the x-coordinate based on your layout
-      y: 100, // Adjust the y-coordinate based on your layout
-      w: 100,
-      h: 100,
-      color: 'cyan'
-    },
-    { isStatic: false, density: 0.01 } // Adjust the density
-  );
-  
-  // Constrain the hanging box to a fixed point (create a shorter string)
-  hangingBox.constrainTo(null, { pointB: { x: 750, y: 50 }, length: 500, draw: true });
-  
-  // Add the hanging box to the blocks array
-  blocks.push(hangingBox);
-  
-
-  // Constrain the hanging box to a fixed point (create a string)
-  stringConstraint = Constraint.create({
-    bodyA: hangingBox.body,
-    pointA: { x: 0, y: -20 }, // Offset point for the string
-    pointB: { x: 750, y: 50 }, // Fixed point for the string
-    length: 0, // Initial length (will be adjusted later)
-    stiffness: 0.1
-  });
-
-  // Add the hanging box and string to the blocks array
-  blocks.push(hangingBox);
-  blocks.push(stringConstraint);
-
-  invisibleRectangle = Bodies.rectangle(1399, 1164, 54, 300, {
-    isStatic: true,
-    render: { fillStyle: 'transparent', visible: false },
-  });
-  World.add(world, invisibleRectangle);
 
   const soundSensor = createSoundSensor(world, 574, 3050, 4021, 20, sounds, () => {
     console.log(' Sound sensor triggered by the ball!');
@@ -186,17 +145,17 @@ function setup() {
       },
     },
   };
-  //const rabbitBody = Bodies.rectangle(rabbit.x, rabbit.y, rabbit.width, rabbit.height, rabbitOptions);
-  //World.add(world, rabbitBody);
-  ///rabbits.push(rabbitBody);
+  const rabbitBody = Bodies.rectangle(rabbit.x, rabbit.y, rabbit.width, rabbit.height, rabbitOptions);
+  World.add(world, rabbitBody);
+  rabbits.push(rabbitBody);
 
-  // Create and add the 3 rabbits
-  for (let i = 0; i < numRabbits; i++) {
-    const newRabbitBody = Bodies.rectangle(rabbit.x + i * (rabbit.width + 10), windowHeight + 100, rabbit.width, rabbit.height, rabbitOptions);
+  // Create and add the remaining rabbits
+  for (let i = 1; i < numRabbits; i++) {
+    const newRabbitBody = Bodies.rectangle(rabbit.x + i * (rabbit.width + 10), rabbit.y, rabbit.width, rabbit.height, rabbitOptions);
+    World.add(world, newRabbitBody);
     rabbits.push(newRabbitBody);
   }
-  ;
-  
+
   Runner.run(engine);
 }
 
@@ -211,14 +170,13 @@ function scrollEndless(point) {
 function keyPressed(event) {
   switch (keyCode) {
     case 32:
-      event.preventDefault();
-
       if (active === -1) {
         active = 0;
         murmel = new Ball(world, { x: 300, y: 100, r: 60, color: 'green' }, { label: "Murmel", density: 0.003, restitution: 0.3, friction: 0, frictionAir: 0 });
 
         blocks.push(murmel);
         bouncingSound.play();
+        event.preventDefault();
       } else {
         Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 2, y: 0 });
         bouncingSound.play();
@@ -238,28 +196,29 @@ function keyPressed(event) {
 function drawRabbit() {
   rabbits.forEach((rabbitBody) => {
     const pos = rabbitBody.position;
-    image(rabbitImg, pos.x - rabbit.width / 2, pos.y - rabbit.height / 2, rabbit.width, rabbit.height);
+    // Use the updated body position when drawing
+    fill(255, 0, 0); // Red color
+    rect(pos.x - rabbit.width / 2, pos.y - rabbit.height / 2, rabbit.width, rabbit.height);
   });
 }
 
 function animateRabbit() {
   rabbits.forEach((rabbitBody) => {
+    // Use the updated body position when checking the y position
     const rabbitPos = rabbitBody.position;
-    if (rabbitPos.y <= rabbit.endY && rabbitPos.y >= rabbit.startY) {
+    if (rabbitPos.y <= rabbit.endY && rabbitPos.y >= 600) {
       rabbitBody.position.y += rabbit.speed;
-    } else if (rabbitPos.y < rabbit.startY) {
-      rabbitBody.position.y = rabbit.startY;
-      rabbit.speed *= -1;
+    } else if (rabbitPos.y < 600) {
+      rabbitBody.position.y = 600;
+      rabbit.speed *= -1; // Reverse direction when reaching the lowest position
     } else {
-      rabbitBody.position.y = rabbit.endY;
-      rabbit.speed *= -1;
+      rabbitBody.position.y = 900;
+      rabbit.speed *= -1; // Reverse direction when reaching the highest position
     }
-
-    // Update the visibility of the invisible rectangle
-    const isVisible = rabbitPos.y >= 850 && rabbitPos.y <= 1164;
-    invisibleRectangle.render.visible = isVisible;
   });
 }
+
+
 function draw() {
   if (active < -1) {
   }
@@ -291,46 +250,8 @@ function draw() {
       block.draw();
     }
   });
-  
-    if (invisibleRectangle) {
-    const invisibleRectanglePos = invisibleRectangle.position;
-    console.log("invisibleRectanglePos:", invisibleRectanglePos);
-    console.log("invisibleRectangle.width:", invisibleRectangle.width);
-    console.log("invisibleRectangle.height:", invisibleRectangle.height);
 
-    // Additional checks for position and dimensions
-    if (
-      !isNaN(invisibleRectanglePos.x) &&
-      !isNaN(invisibleRectanglePos.y) &&
-      !isNaN(invisibleRectangle.width) &&
-      !isNaN(invisibleRectangle.height)
-    ) {
-      fill(invisibleRectangle.render.visible ? color(169, 169, 169) : color(255, 255, 255));
-      rect(
-        invisibleRectanglePos.x - invisibleRectangle.width / 2,
-        invisibleRectanglePos.y - invisibleRectangle.height / 2,
-        invisibleRectangle.width,
-        invisibleRectangle.height
-      );
-    } else {
-      console.log("Invalid position or dimensions");
-    }
-  } else {
-    console.log("invisibleRectangle not defined");
-  }
+  drawRabbit(); // Call the drawWhiteRabbit function to draw the rabbit
+}
 
 
-  drawRabbit();
-  hangingBox.draw();
-
-  // Draw the string (constraint)
-  stroke(255);
-  strokeWeight(2);
-  line(
-    stringConstraint.bodyA.position.x + stringConstraint.pointA.x,
-    stringConstraint.bodyA.position.y + stringConstraint.pointA.y,
-    stringConstraint.pointB.x,
-    stringConstraint.pointB.y
-  );
-
-   }
