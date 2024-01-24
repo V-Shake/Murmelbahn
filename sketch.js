@@ -87,7 +87,7 @@ imageMode(CENTER)
   createFallingBook(2250, 1976, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1850, 1976, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1500, 1976, { force: { x: 0, y: 0.005 } }, false);
-  createRabbit(547, 1200);
+  createRabbit(547, 1000);
 
 
   blocks.push(new BlockCore(engine.world, { x: -dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
@@ -206,7 +206,7 @@ function keyPressed(event) {
 
       if (active === -1) {
         active = 0;
-        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.003, restitution: 0.3, xfriction: 0, frictionAir: 0 });
+        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.002, restitution: 0.3, xfriction: 0, frictionAir: 0 });
 
         blocks.push(murmel);
         bouncingSound.play();
