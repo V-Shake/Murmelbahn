@@ -82,11 +82,11 @@ imageMode(CENTER)
   new BlocksFromSVG(engine.world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true, friction:1 });
 
   createFallingBook(1750, 35, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(2600, 650, { force: { x: 0, y: 0.1 } }, false);
+  createFallingBook(2500, 650, { force: { x: 0, y: 0.1 } }, false);
 
-  createFallingBook(2250, 1076, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(1850, 1076, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(1500, 1076, { force: { x: 0, y: 0.005 } }, false);
+  createFallingBook(2250, 1376, { force: { x: 0, y: 0.005 } }, false);
+  createFallingBook(1850, 1376, { force: { x: 0, y: 0.005 } }, false);
+  createFallingBook(1500, 1376, { force: { x: 0, y: 0.005 } }, false);
   createRabbit(547, 1000);
 
 
@@ -206,7 +206,7 @@ function keyPressed(event) {
 
       if (active === -1) {
         active = 0;
-        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.00075, restitution: 0.3, xfriction: 0, frictionAir: 0 });
+        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, xfriction: 0, frictionAir: 0 });
 
         blocks.push(murmel);
         bouncingSound.play();
