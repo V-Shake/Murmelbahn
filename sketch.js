@@ -196,7 +196,40 @@ imageMode(CENTER)
     rabbits.push(newRabbitBody);
   }
   ; */
+
+  // Riesenrad
+  let radius = 200;
+  rad = new Ball(
+    world,
+    { x: 3500, y: 500, r: radius, color: 'blue' },
+    { isStatic: false, isSensor: true }
+  )
+  blocks.push(rad);
+  rad.constrainTo(null, { pointB: { x: 3500, y: 500 }, stiffness: 1.0, draw: true });
+
+  cnt = 4;
+  for (let i = 0; i < cnt; i++) {
+    let x = (radius - 10) * Math.sin(2 * PI / cnt * i);
+    let y = (radius - 10) * Math.cos(2 * PI / cnt * i);
+    let block = new Block(world, { x: 3500 + x, y: 560 + y, w: 150, h: 30, color: 'white' }, { isStatic: false })
+    blocks.push(block)
+    block.constrainTo(rad, { pointA: { x: 0, y: -10 }, pointB: { x: x, y: y }, stiffness: 1.0, draw: true });
+  }
   
+
+  // trampoline
+  const wrap = {
+    min: { x: 0, y: 0 },
+    max: { x: width, y: height }
+  };
+
+  trampoline = new Block(world,
+    { x: 200, y: 500, w: 200, h: 50, color: 'blue' },
+    { isStatic: true, restitution: 1.1 }
+  );
+ 
+
+
   Runner.run(engine);
 }
 
@@ -313,6 +346,9 @@ function draw() {
     stringConstraint.pointB.x,
     stringConstraint.pointB.y
   );
+
+  trampoline.draw();
+ 
 
   }
 
