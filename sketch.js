@@ -94,7 +94,7 @@ imageMode(CENTER)
 
   blocks.push(new BlockCore(engine.world,
     {
-      x: 0, y: 0, w: 100, h: 10000,
+      x: 0, y: 0, w: 100, h: 11000,
       trigger: () => {
         direction *= -1;
         console.log('Left Trigger');
@@ -105,7 +105,7 @@ imageMode(CENTER)
 
   blocks.push(new BlockCore(engine.world,
     {
-      x: dim.w - 5, y: 0, w: 100, h: 10000,
+      x: dim.w - 5, y: 0, w: 100, h: 11000,
       trigger: () => {
         direction *= -1;
         console.log('Right Trigger');
@@ -205,7 +205,7 @@ function keyPressed(event) {
 
       if (active === -1) {
         active = 0;
-        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, xfriction: 0, frictionAir: 0 });
+        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.001, restitution: 0.3, xfriction: 0, frictionAir: 0 });
 
         blocks.push(murmel);
         bouncingSound.play();
