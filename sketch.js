@@ -88,11 +88,11 @@ function setup() {
   new BlocksFromSVG(engine.world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true });
 
   createFallingBook(1750, 35, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(2600, 950, { force: { x: 0, y: 0.1 } }, false);
+  createFallingBook(2600, 850, { force: { x: 0, y: 0.1 } }, false);
 
-  createFallingBook(2250, 1976, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(1850, 1976, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(1500, 1976, { force: { x: 0, y: 0.005 } }, false);
+  createFallingBook(2230, 1600, { force: { x: 0, y: 0.005 } }, false);
+  createFallingBook(1830, 1600, { force: { x: 0, y: 0.005 } }, false);
+  createFallingBook(1400, 1600, { force: { x: 0, y: 0.005 } }, false);
 
   blocks.push(new BlockCore(engine.world, { x: -dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
   blocks.push(new BlockCore(engine.world, { x: dim.w + dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
