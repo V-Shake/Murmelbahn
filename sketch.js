@@ -149,7 +149,7 @@ imageMode(CENTER)
 
 
 
-  const soundSensor = createSoundSensor(engine.world, 67, 2463, 2209, 20, sounds, () => {
+  const soundSensor = createSoundSensor(engine.world, 124, 2437, 2290, 15, sounds, () => {
     console.log(' Sound sensor triggered by the ball!');
   });
 
