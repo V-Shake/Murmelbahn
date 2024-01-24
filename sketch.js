@@ -82,19 +82,20 @@ imageMode(CENTER)
   new BlocksFromSVG(engine.world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true, friction:1 });
 
   createFallingBook(1750, 35, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(2600, 850, { force: { x: 0, y: 0.1 } }, false);
+  createFallingBook(2500, 650, { force: { x: 0, y: 0.1 } }, false);
 
-  createFallingBook(2230, 1600, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(1830, 1600, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(1400, 1600, { force: { x: 0, y: 0.005 } }, false);
-  createRabbit(547, 1200);
+  createFallingBook(2250, 1376, { force: { x: 0, y: 0.005 } }, false);
+  createFallingBook(1850, 1376, { force: { x: 0, y: 0.005 } }, false);
+  createFallingBook(1500, 1376, { force: { x: 0, y: 0.005 } }, false);
+  createRabbit(547, 1000);
+
 
   blocks.push(new BlockCore(engine.world, { x: -dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
   blocks.push(new BlockCore(engine.world, { x: dim.w + dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
 
   blocks.push(new BlockCore(engine.world,
     {
-      x: 0, y: 0, w: 100, h: 11000,
+      x: 0, y: 0, w: 100, h: 15000,
       trigger: () => {
         direction *= -1;
         console.log('Left Trigger');
@@ -105,7 +106,7 @@ imageMode(CENTER)
 
   blocks.push(new BlockCore(engine.world,
     {
-      x: dim.w - 5, y: 0, w: 100, h: 11000,
+      x: dim.w - 5, y: 0, w: 100, h: 15000,
       trigger: () => {
         direction *= -1;
         console.log('Right Trigger');
@@ -148,7 +149,7 @@ imageMode(CENTER)
 
 
 
-  const soundSensor = createSoundSensor(engine.world, 574, 3050, 4021, 20, sounds, () => {
+  const soundSensor = createSoundSensor(engine.world, 104, 2437, 4500, 15, sounds, () => {
     console.log(' Sound sensor triggered by the ball!');
   });
 
