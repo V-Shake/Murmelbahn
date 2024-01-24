@@ -13,7 +13,6 @@ let isDrag = false;
 let bgX = 0;
 let bgY = 0;
 let active = -1;
-//let invisibleRectangle;
 let hangingBox; // Variable to store the hanging box
 let stringConstraint;
 let pendulum;
@@ -30,21 +29,15 @@ let direction = 0.2;
 let bouncingSound;
 let backgroundImage;
 let ballSVG;
+let ballOverlay;
 let bookImg;
 let fallingBook = [];
 let rabbitImg;
 const numRabbits = 3;
 const rabbits = [];
-/* 
-const rabbit = {
-  x: 547,
-  y: 1200,
-  width: 356,
-  height: 749,
-  speed: 2,
-  startY:500,
-  endY: 1200
-}; */
+const rabbit = [];
+
+
 
 let sounds = [
   './assets/audio/do.mp3',
@@ -67,7 +60,8 @@ function preload() {
 
   backgroundImage = loadImage('./assets/graphics/background/backdrop.jpg');
   backgroundImage.resize(600, 1000);
-  ballSVG = loadImage('./assets/graphics/foreground/ball.svg');
+  ballOverlay = loadImage('./assets/graphics/foreground/ball.svg');
+  ballSVG = loadImage('./assets/graphics/foreground/ball star.svg');
   fallingBookImg = loadImage('./assets/graphics/foreground/book.png');
   rabbitImg = loadImage('./assets/graphics/foreground/whiteRabbit.png');
 }
@@ -79,13 +73,13 @@ function setup() {
   canvasElem.addEventListener('click', () => {
     bgMusic.play();
   });
-
+imageMode(CENTER)
   canvasElem = document.getElementById('thecanvas');
 
   engine = Engine.create();
   world = engine.world; // Set the world property to the engine's world
 
-  new BlocksFromSVG(engine.world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true });
+  new BlocksFromSVG(engine.world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true, friction:1 });
 
   createFallingBook(1750, 35, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(2600, 850, { force: { x: 0, y: 0.1 } }, false);
@@ -93,6 +87,7 @@ function setup() {
   createFallingBook(2230, 1600, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1830, 1600, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1400, 1600, { force: { x: 0, y: 0.005 } }, false);
+  createRabbit(547, 1200);
 
   blocks.push(new BlockCore(engine.world, { x: -dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
   blocks.push(new BlockCore(engine.world, { x: dim.w + dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
@@ -132,7 +127,7 @@ function setup() {
   );
 
   // Constrain the hanging box to a fixed point (create a shorter string)
-  hangingBox.constrainTo(null, { pointB: { x: 750, y: 50 }, length: 500, draw: true });
+  hangingBox.constrainTo(null, { pointB: { x: 750, y: 50 }, length: 200, draw: true });
 
   // Add the hanging box to the blocks array
   blocks.push(hangingBox);
@@ -210,7 +205,7 @@ function keyPressed(event) {
 
       if (active === -1) {
         active = 0;
-        murmel = new Ball(world, { x: 300, y: 100, r: 60, color: 'green' }, { label: "Murmel", density: 0.003, restitution: 0.3, friction: 0, frictionAir: 0 });
+        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.003, restitution: 0.3, xfriction: 0, frictionAir: 0 });
 
         blocks.push(murmel);
         bouncingSound.play();
@@ -272,6 +267,8 @@ function draw() {
   }
 
   if (murmel && murmel.draw) {
+    image(ballOverlay, murmel.body.position.x, murmel.body.position.y) 
+
     murmel.draw();
   }
 
@@ -287,34 +284,13 @@ function draw() {
     }
   });
   
-  /*   if (invisibleRectangle) {
-    const invisibleRectanglePos = invisibleRectangle.position;
-    console.log("invisibleRectanglePos:", invisibleRectanglePos);
-    console.log("invisibleRectangle.width:", invisibleRectangle.width);
-    console.log("invisibleRectangle.height:", invisibleRectangle.height);
-*/
-    // Additional checks for position and dimensions
-   /*  if (
-      !isNaN(invisibleRectanglePos.x) &&
-      !isNaN(invisibleRectanglePos.y) &&
-      !isNaN(invisibleRectangle.width) &&
-      !isNaN(invisibleRectangle.height)
-    ) {
-      fill(invisibleRectangle.render.visible ? color(169, 169, 169) : color(255, 255, 255));
-      rect(
-        invisibleRectanglePos.x - invisibleRectangle.width / 2,
-        invisibleRectanglePos.y - invisibleRectangle.height / 2,
-        invisibleRectangle.width,
-        invisibleRectangle.height
-      );
-    } else {
-      console.log("Invalid position or dimensions");
+  rabbit.forEach(block => {
+    if (block && block.draw) {
+      block.draw();
     }
-  } else {
-    console.log("invisibleRectangle not defined");
-  }
-*/
-
+  });
+  drawRabbit();
+  animateRabbit();
   // drawRabbit();
   hangingBox.draw();
 

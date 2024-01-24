@@ -49,10 +49,10 @@ class Ball extends Block {
     this.body = Matter.Bodies.circle(this.attributes.x, this.attributes.y, this.attributes.r, this.options);
   }
 
-  draw() {
+ /*  draw() {
     super.draw();
     // Draw the graphic at the ball's position
     image(this.ballSVG, this.body.position.x - this.attributes.r, this.body.position.y - this.attributes.r, this.attributes.r * 2, this.attributes.r * 2);
-  }
+  } */
 
 }
