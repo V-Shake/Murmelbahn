@@ -1,9 +1,9 @@
 
 const rabbitWidth = 356;
 const rabbitHeight = 749;
-const rabbitStartY = 800;
-const rabbitEndY = 1400;
-let rabbitSpeed = 8;
+const rabbitStartY = 1000;
+const rabbitEndY = 1200;
+let rabbitSpeed = 2;
 function createRabbit(x, y, options = {}, applyForceOnSpace = false) {
  
  

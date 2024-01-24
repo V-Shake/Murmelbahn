@@ -82,12 +82,12 @@ imageMode(CENTER)
   new BlocksFromSVG(engine.world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true, friction:1 });
 
   createFallingBook(1750, 35, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(2600, 950, { force: { x: 0, y: 0.1 } }, false);
+  createFallingBook(3000, 950, { force: { x: 0, y: 0.1 } }, false);
 
-  createFallingBook(2250, 1976, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(1850, 1976, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(1500, 1976, { force: { x: 0, y: 0.005 } }, false);
-  createRabbit(547, 1200);
+  createFallingBook(2250, 487, { force: { x: 0, y: 0.005 } }, false);
+  createFallingBook(1850, 487, { force: { x: 0, y: 0.005 } }, false);
+  createFallingBook(1500, 487, { force: { x: 0, y: 0.005 } }, false);
+  createRabbit(547, 1000);
 
 
   blocks.push(new BlockCore(engine.world, { x: -dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
@@ -95,7 +95,7 @@ imageMode(CENTER)
 
   blocks.push(new BlockCore(engine.world,
     {
-      x: 0, y: 0, w: 100, h: 10000,
+      x: 0, y: 0, w: 100, h: 15000,
       trigger: () => {
         direction *= -1;
         console.log('Left Trigger');
@@ -106,7 +106,7 @@ imageMode(CENTER)
 
   blocks.push(new BlockCore(engine.world,
     {
-      x: dim.w - 5, y: 0, w: 100, h: 10000,
+      x: dim.w - 5, y: 0, w: 100, h: 15000,
       trigger: () => {
         direction *= -1;
         console.log('Right Trigger');
@@ -149,7 +149,7 @@ imageMode(CENTER)
 
 
 
-  const soundSensor = createSoundSensor(engine.world, 574, 3050, 4021, 20, sounds, () => {
+  const soundSensor = createSoundSensor(engine.world, 67, 2463, 2209, 20, sounds, () => {
     console.log(' Sound sensor triggered by the ball!');
   });
 
@@ -206,7 +206,7 @@ function keyPressed(event) {
 
       if (active === -1) {
         active = 0;
-        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.003, restitution: 0.3, xfriction: 0, frictionAir: 0 });
+        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.001, restitution: 0.3, xfriction: 0, frictionAir: 0 });
 
         blocks.push(murmel);
         bouncingSound.play();
