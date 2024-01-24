@@ -19,6 +19,7 @@ let pendulum;
 let blocks = [];
 let murmel;
 let bgMusic;
+let bgm;
 
 let canvasElem;
 let off = { x: 0, y: 0 };
@@ -27,6 +28,8 @@ const dim = { w: 3840, h: 7200 };
 let direction = 0.2;
 
 let bouncingSound;
+let bouncing;
+let keyPressedSound;
 let backgroundImage;
 let ballSVG;
 let ballOverlay;
@@ -53,8 +56,11 @@ let sounds = [
 function preload() {
   console.log("Preloading audio files...");
 
+  keyPressedSound = new Audio('./assets/audio/keyPressedSound.mp3');
   bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
+  bouncing = new Audio ('./assets/audio/bouncing.mp3');
   bgMusic = new Audio('./assets/audio/bgmusic.mp3');
+  bgm = new Audio('./assets/audio/bgm.mp3')
 
   console.log("Loaded audio file:", bouncingSound.src);
 
@@ -72,6 +78,7 @@ function setup() {
   canvasElem = document.getElementById('thecanvas');
   canvasElem.addEventListener('click', () => {
     bgMusic.play();
+    // bgm.play(); 
   });
 imageMode(CENTER)
   canvasElem = document.getElementById('thecanvas');
@@ -159,9 +166,11 @@ imageMode(CENTER)
     pairs.forEach((pair, i) => {
       if (pair.bodyA.label == 'Murmel') {
         pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block)
+        // bouncing.play();
       }
       if (pair.bodyB.label == 'Murmel') {
         pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block)
+        bouncing.play();
       }
     })
   })
@@ -209,10 +218,10 @@ function keyPressed(event) {
         murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.001, restitution: 0.3, xfriction: 0, frictionAir: 0 });
 
         blocks.push(murmel);
-        bouncingSound.play();
+        keyPressedSound.play();
       } else {
         Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 2, y: 0 });
-        bouncingSound.play();
+        KeyPressedSound.play();
        // rabbit.y = 890;
       }
       break;
