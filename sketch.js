@@ -205,7 +205,7 @@ function keyPressed(event) {
 
       if (active === -1) {
         active = 0;
-        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.003, restitution: 0.3, xfriction: 0, frictionAir: 0 });
+        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, xfriction: 0, frictionAir: 0 });
 
         blocks.push(murmel);
         bouncingSound.play();
