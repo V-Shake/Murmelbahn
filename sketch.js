@@ -195,14 +195,14 @@ function setup() {
   ; */
 
   // Riesenrad
-  let radius = 400;
+  let radius = 370;
   rad = new Ball(
     world,
-    { x: 3500, y: 500, r: radius, color: 'blue' },
+    { x: 320, y: 5000, r: radius, color: 'blue' },
     { isStatic: false, isSensor: true ,angle: wheelAngle}
   )
   blocks.push(rad);
-  rad.constrainTo(null, { pointB: { x: 3500, y: 500 }, stiffness: 1.0, draw: true });
+  rad.constrainTo(null, { pointB: { x: 320, y: 5000 }, stiffness: 1.0, draw: false });
 
   cnt = 6;
   cabinH = 120
@@ -311,8 +311,8 @@ function draw() {
   }
   // update wheel
   Matter.Body.setAngle(rad.body, wheelAngle);
-  Matter.Body.setAngularVelocity(rad.body, 0.15);
-  wheelAngle += 0.015;
+  Matter.Body.setAngularVelocity(rad.body, 0.007);
+  wheelAngle -= 0.007;
 
   blocks.forEach(block => {
     if (block && block.draw) {
