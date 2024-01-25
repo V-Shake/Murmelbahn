@@ -1,47 +1,41 @@
+const rabbitWidth = 199;
+const rabbitHeight = 424;
+const rabbitStartY = 500;
+const rabbitEndY = 1900;
+let rabbitSpeed = 5;
 
-const rabbitWidth = 356;
-const rabbitHeight = 749;
-const rabbitStartY = 1000;
-const rabbitEndY = 1200;
-let rabbitSpeed = 2;
-function createRabbit(x, y, options = {}, applyForceOnSpace = false) {
- 
- 
-  
+// Create rabbit at a specific position
+
+function createRabbit(x, y, options = {}) {
   let rabbitBlock = new Block(
     world,
     { x, y, w: rabbitWidth, h: rabbitHeight, image: rabbitImg },
-    { isStatic: true }
-
-   
+    { isStatic: true, ...options } // Set isStatic to true
   );
-  rabbit.push(rabbitBlock);
-
+  return rabbitBlock; // Return the rabbitBlock to access its position in the main code
 }
+
 function drawRabbit() {
-  rabbits.forEach((rabbitBody) => {
-    rabbitBody.draw()
-    /* const pos = rabbitBody.position;
-    image(rabbitImg, pos.x - rabbit.width / 2, pos.y - rabbit.height / 2, rabbit.width, rabbit.height); */
+  rabbit.forEach((rabbitBody) => {
+    const pos = rabbitBody.body.position;
+    image(rabbitImg, pos.x - rabbitWidth / 2, pos.y - rabbitHeight / 2, rabbitWidth, rabbitHeight);
   });
 }
 function animateRabbit() {
   rabbit.forEach((rabbitBody) => {
     const rabbitPos = rabbitBody.body.position;
-    if (rabbitPos.y < rabbitStartY || rabbitPos.y > rabbitEndY ) {
+    const rabbitIndex = rabbit.indexOf(rabbitBody);
 
-      rabbitSpeed *= -1; // Reverse direction when reaching the highest position
+    // Update the rabbit's position within the physics engine
+    Matter.Body.setPosition(rabbitBody.body, { x: rabbitPos.x, y: rabbitPos.y + rabbitSpeed });
 
+    // Check if the rabbit is close to the starting position, reverse direction if needed
+    const returnThreshold = 5; // Adjust as needed
+    if (rabbitSpeed > 0 && rabbitPos.y > rabbitEndY - returnThreshold) {
+      rabbitSpeed *= -1;
+    } else if (rabbitSpeed < 0 && rabbitPos.y < rabbitStartY + returnThreshold) {
+      rabbitSpeed *= -1;
     }
-    rabbitBody.body.position.y += rabbitSpeed;
-    /*    if (rabbitPos.y <= rabbitEndY && rabbitPos.y >= rabbitStartY) {
-      rabbitBody.body.position.y += rabbitSpeed;
-    } else if (rabbitPos.y < rabbitStartY) {
-      rabbitBody.body.position.y = rabbitStartY;
-      rabbitSpeed *= -1; // Reverse direction when reaching the lowest position
-    } else {
-      rabbitBody.body.position.y = rabbitEndY;
-      rabbitSpeed *= -1; // Reverse direction when reaching the highest position
-    } */
   });
 }
+

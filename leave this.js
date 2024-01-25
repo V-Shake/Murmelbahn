@@ -19,7 +19,6 @@ let pendulum;
 let blocks = [];
 let murmel;
 let bgMusic;
-let bgm;
 
 let canvasElem;
 let off = { x: 0, y: 0 };
@@ -28,8 +27,6 @@ const dim = { w: 3840, h: 7200 };
 let direction = 0.2;
 
 let bouncingSound;
-let bouncing;
-let keyPressedSound;
 let backgroundImage;
 let ballSVG;
 let ballOverlay;
@@ -56,11 +53,8 @@ let sounds = [
 function preload() {
   console.log("Preloading audio files...");
 
-  keyPressedSound = new Audio('./assets/audio/keyPressedSound.mp3');
   bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
-  bouncing = new Audio ('./assets/audio/bouncing.mp3');
   bgMusic = new Audio('./assets/audio/bgmusic.mp3');
-  bgm = new Audio('./assets/audio/bgm.mp3')
 
   console.log("Loaded audio file:", bouncingSound.src);
 
@@ -78,17 +72,14 @@ function setup() {
   canvasElem = document.getElementById('thecanvas');
   canvasElem.addEventListener('click', () => {
     bgMusic.play();
-    // bgm.play(); 
   });
-
-  imageMode(CENTER);
-
+imageMode(CENTER)
   canvasElem = document.getElementById('thecanvas');
 
   engine = Engine.create();
-  world = engine.world; 
+  world = engine.world; // Set the world property to the engine's world
 
-  new BlocksFromSVG(engine.world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true, friction: 10 });
+  new BlocksFromSVG(engine.world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true, friction:1 });
 
   createFallingBook(1750, 35, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(2500, 650, { force: { x: 0, y: 0.1 } }, false);
@@ -96,12 +87,7 @@ function setup() {
   createFallingBook(2250, 1376, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1850, 1376, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1500, 1376, { force: { x: 0, y: 0.005 } }, false);
-  const rabbit1 = createRabbit(800, 500);
-  const rabbit2 = createRabbit(1400, 500); // Adjust x-coordinate as needed
-  const rabbit3 = createRabbit(2000, 500); // Adjust x-coordinate as needed
-
-  // Add each rabbit to the rabbit array
-  rabbit.push(rabbit1, rabbit2, rabbit3);
+createRabbit (800, 1900)
 
   blocks.push(new BlockCore(engine.world, { x: -dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
   blocks.push(new BlockCore(engine.world, { x: dim.w + dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
@@ -129,8 +115,6 @@ function setup() {
   ));
 
   blocks.push(murmel);
-
-
   hangingBox = new Block(
     engine.world, {
       x: 750, // Adjust the x-coordinate based on your layout
@@ -174,56 +158,15 @@ function setup() {
     pairs.forEach((pair, i) => {
       if (pair.bodyA.label == 'Murmel') {
         pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block)
-        // bouncing.play();
       }
       if (pair.bodyB.label == 'Murmel') {
         pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block)
-        bouncing.play();
       }
     })
   })
 
 
-  // Create and add the 3 rabbits
- /*  for (let i = 0; i < numRabbits; i++) {
-    const newRabbitBody = Bodies.rectangle(rabbit.x + i * (rabbit.width + 10), windowHeight + 100, rabbit.width, rabbit.height, rabbitOptions);
-    rabbits.push(newRabbitBody);
-  }
-  ; */
-
-  // Riesenrad
-  let radius = 200;
-  rad = new Ball(
-    world,
-    { x: 3500, y: 500, r: radius, color: 'blue' },
-    { isStatic: false, isSensor: true }
-  )
-  blocks.push(rad);
-  rad.constrainTo(null, { pointB: { x: 3500, y: 500 }, stiffness: 1.0, draw: true });
-
-  cnt = 3;
-  for (let i = 0; i < cnt; i++) {
-    let x = (radius - 10) * Math.sin(2 * PI / cnt * i);
-    let y = (radius - 10) * Math.cos(2 * PI / cnt * i);
-    let block = new Block(world, { x: 3500 + x, y: 560 + y, w: 150, h: 30, color: 'white' }, { isStatic: false })
-    blocks.push(block)
-    block.constrainTo(rad, { pointA: { x: 0, y: -10 }, pointB: { x: x, y: y }, stiffness: 1.0, draw: true });
-  }
   
-
-  // trampoline
-  const wrap = {
-    min: { x: 0, y: 0 },
-    max: { x: width, y: height }
-  };
-
-  trampoline = new Block(world,
-    { x: 200, y: 500, w: 200, h: 50, color: 'blue' },
-    { isStatic: true, restitution: 1.1 }
-  );
- 
-
-
   Runner.run(engine);
 }
 
@@ -245,9 +188,10 @@ function keyPressed(event) {
         murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, xfriction: 0, frictionAir: 0 });
 
         blocks.push(murmel);
+        bouncingSound.play();
       } else {
         Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 2, y: 0 });
-        KeyPressedSound.play();
+        bouncingSound.play();
        // rabbit.y = 890;
       }
       break;
@@ -300,7 +244,7 @@ function draw() {
       block.draw();
     }
   });
-  animateRabbit();
+    animateRabbit();
   hangingBox.draw();
 
   // Draw the string (constraint)
@@ -312,9 +256,6 @@ function draw() {
     stringConstraint.pointB.x,
     stringConstraint.pointB.y
   );
-
-  trampoline.draw();
- 
 
   }
 
