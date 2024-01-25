@@ -96,9 +96,9 @@ function setup() {
   createFallingBook(2250, 1376, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1850, 1376, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1500, 1376, { force: { x: 0, y: 0.005 } }, false);
-  const rabbit1 = createRabbit(800, 4200);
+  const rabbit1 = createRabbit(800, 3700);
   const rabbit2 = createRabbit(1400, 4200); // Adjust x-coordinate as needed
-  const rabbit3 = createRabbit(2000, 4200); // Adjust x-coordinate as needed
+  const rabbit3 = createRabbit(2000, 3700); // Adjust x-coordinate as needed
 
   // Add each rabbit to the rabbit array
   rabbit.push(rabbit1, rabbit2, rabbit3);
