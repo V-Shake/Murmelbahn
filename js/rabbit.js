@@ -1,5 +1,5 @@
-const rabbitWidth = 356;
-const rabbitHeight = 749;
+const rabbitWidth = 199;
+const rabbitHeight = 424;
 const rabbitStartY = 500;
 const rabbitEndY = 1900;
 let rabbitSpeed = 5;

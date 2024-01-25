@@ -184,8 +184,6 @@ function setup() {
   })
 
 
-<<<<<<< HEAD
-=======
   // Create and add the 3 rabbits
  /*  for (let i = 0; i < numRabbits; i++) {
     const newRabbitBody = Bodies.rectangle(rabbit.x + i * (rabbit.width + 10), windowHeight + 100, rabbit.width, rabbit.height, rabbitOptions);
@@ -211,7 +209,6 @@ function setup() {
     blocks.push(block)
     block.constrainTo(rad, { pointA: { x: 0, y: -10 }, pointB: { x: x, y: y }, stiffness: 1.0, draw: true });
   }
->>>>>>> 6e61eff35ce9546a9eedabcd3ed8feff8fccb345
   
 
   // trampoline
@@ -245,10 +242,9 @@ function keyPressed(event) {
 
       if (active === -1) {
         active = 0;
-        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.001, restitution: 0.3, xfriction: 0, frictionAir: 0 });
+        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, xfriction: 0, frictionAir: 0 });
 
         blocks.push(murmel);
-        keyPressedSound.play();
       } else {
         Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 2, y: 0 });
         KeyPressedSound.play();
