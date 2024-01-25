@@ -19,6 +19,7 @@ let pendulum;
 let blocks = [];
 let murmel;
 let bgMusic;
+let bgm;
 
 let canvasElem;
 let off = { x: 0, y: 0 };
@@ -27,6 +28,8 @@ const dim = { w: 3840, h: 7200 };
 let direction = 0.2;
 
 let bouncingSound;
+let bouncing;
+let keyPressedSound;
 let backgroundImage;
 let ballSVG;
 let ballOverlay;
@@ -53,8 +56,11 @@ let sounds = [
 function preload() {
   console.log("Preloading audio files...");
 
+  keyPressedSound = new Audio('./assets/audio/keyPressedSound.mp3');
   bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
+  bouncing = new Audio ('./assets/audio/bouncing.mp3');
   bgMusic = new Audio('./assets/audio/bgmusic.mp3');
+  bgm = new Audio('./assets/audio/bgm.mp3')
 
   console.log("Loaded audio file:", bouncingSound.src);
 
@@ -72,8 +78,11 @@ function setup() {
   canvasElem = document.getElementById('thecanvas');
   canvasElem.addEventListener('click', () => {
     bgMusic.play();
+    // bgm.play(); 
   });
-imageMode(CENTER)
+
+  imageMode(CENTER);
+
   canvasElem = document.getElementById('thecanvas');
 
   engine = Engine.create();
@@ -165,15 +174,59 @@ imageMode(CENTER)
     pairs.forEach((pair, i) => {
       if (pair.bodyA.label == 'Murmel') {
         pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block)
+        // bouncing.play();
       }
       if (pair.bodyB.label == 'Murmel') {
         pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block)
+        bouncing.play();
       }
     })
   })
 
 
+<<<<<<< HEAD
+=======
+  // Create and add the 3 rabbits
+ /*  for (let i = 0; i < numRabbits; i++) {
+    const newRabbitBody = Bodies.rectangle(rabbit.x + i * (rabbit.width + 10), windowHeight + 100, rabbit.width, rabbit.height, rabbitOptions);
+    rabbits.push(newRabbitBody);
+  }
+  ; */
+
+  // Riesenrad
+  let radius = 200;
+  rad = new Ball(
+    world,
+    { x: 3500, y: 500, r: radius, color: 'blue' },
+    { isStatic: false, isSensor: true }
+  )
+  blocks.push(rad);
+  rad.constrainTo(null, { pointB: { x: 3500, y: 500 }, stiffness: 1.0, draw: true });
+
+  cnt = 3;
+  for (let i = 0; i < cnt; i++) {
+    let x = (radius - 10) * Math.sin(2 * PI / cnt * i);
+    let y = (radius - 10) * Math.cos(2 * PI / cnt * i);
+    let block = new Block(world, { x: 3500 + x, y: 560 + y, w: 150, h: 30, color: 'white' }, { isStatic: false })
+    blocks.push(block)
+    block.constrainTo(rad, { pointA: { x: 0, y: -10 }, pointB: { x: x, y: y }, stiffness: 1.0, draw: true });
+  }
+>>>>>>> 6e61eff35ce9546a9eedabcd3ed8feff8fccb345
   
+
+  // trampoline
+  const wrap = {
+    min: { x: 0, y: 0 },
+    max: { x: width, y: height }
+  };
+
+  trampoline = new Block(world,
+    { x: 200, y: 500, w: 200, h: 50, color: 'blue' },
+    { isStatic: true, restitution: 1.1 }
+  );
+ 
+
+
   Runner.run(engine);
 }
 
@@ -192,13 +245,13 @@ function keyPressed(event) {
 
       if (active === -1) {
         active = 0;
-        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, xfriction: 0, frictionAir: 0 });
+        murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.001, restitution: 0.3, xfriction: 0, frictionAir: 0 });
 
         blocks.push(murmel);
-        bouncingSound.play();
+        keyPressedSound.play();
       } else {
         Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 2, y: 0 });
-        bouncingSound.play();
+        KeyPressedSound.play();
        // rabbit.y = 890;
       }
       break;
@@ -263,6 +316,9 @@ function draw() {
     stringConstraint.pointB.x,
     stringConstraint.pointB.y
   );
+
+  trampoline.draw();
+ 
 
   }
 
