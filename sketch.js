@@ -70,21 +70,11 @@ let wheelAngle = 0;
 
     console.log("Loaded audio file:", bouncingSound.src);
 
-<<<<<<< HEAD
     ballOverlay = loadImage('./assets/graphics/foreground/ball.svg');
     ballSVG = loadImage('./assets/graphics/foreground/ball star.svg');
     fallingBookImg = loadImage('./assets/graphics/foreground/book.png');
     rabbitImg = loadImage('./assets/graphics/foreground/whiteRabbit.png');
     brownRabbitImg = loadImage('./assets/graphics/foreground/brownRabbit.png');
-=======
-  backgroundImage = loadImage('./assets/graphics/background/backdrop.jpg');
-  backgroundImage.resize(600, 1000);
-  ballOverlay = loadImage('./assets/graphics/foreground/ball.svg');
-  ballSVG = loadImage('./assets/graphics/foreground/ball star.svg');
-  fallingBookImg = loadImage('./assets/graphics/foreground/book.png');
-  rabbitImg = loadImage('./assets/graphics/foreground/whiteRabbit.png');
-  brownRabbitImg = loadImage('./assets/graphics/foreground/brownRabbit.png');
->>>>>>> 8662b67313f1a73e6379d5a23294e32adeed520a
 
 }
 
@@ -109,21 +99,12 @@ let wheelAngle = 0;
     createFallingBook(1750, 35, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(2500, 650, { force: { x: 0, y: 0.1 } }, false);
 
-<<<<<<< HEAD
     createFallingBook(2250, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1850, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1500, 1376, { force: { x: 0, y: 0.005 } }, false);
     const rabbit1 = createRabbit(800, 3900);
     const rabbit2 = createRabbit(1400, 4200); // Adjust x-coordinate as needed
     const rabbit3 = createRabbit(2000, 3900); // Adjust x-coordinate as needed
-=======
-  createFallingBook(2250, 1376, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(1850, 1376, { force: { x: 0, y: 0.005 } }, false);
-  createFallingBook(1500, 1376, { force: { x: 0, y: 0.005 } }, false);
-  const rabbit1 = createRabbit(800, 3700);
-  const rabbit2 = createRabbit(1400, 4200); // Adjust x-coordinate as needed
-  const rabbit3 = createRabbit(2000, 3700); // Adjust x-coordinate as needed
->>>>>>> 8662b67313f1a73e6379d5a23294e32adeed520a
 
     // Add each rabbit to the rabbit array
     rabbit.push(rabbit1, rabbit2, rabbit3);
@@ -195,19 +176,10 @@ let wheelAngle = 0;
     blocks.push(stringConstraint);
 
 
-
-<<<<<<< HEAD
     const soundSensor = createSoundSensor(engine.world, 104, 2437, 4450, 20, sounds, () => {
-      restitution: 0.01,
-
       console.log(' Sound sensor triggered by the ball!');
-    });
-=======
-  const soundSensor = createSoundSensor(engine.world, 104, 2437, 4450, 20, sounds, () => {
-    console.log(' Sound sensor triggered by the ball!');
-  });
->>>>>>> 8662b67313f1a73e6379d5a23294e32adeed520a
-
+    }, { restitution: 0.5 }); // Adjust the restitution value as needed
+    
     blocks.push(soundSensor);
     Events.on(engine, 'collisionStart', function (event) {
       var pairs = event.pairs;
@@ -238,48 +210,52 @@ let wheelAngle = 0;
     }
     ; */
 
-  // Riesenrad
-  let radius = 370;
-  rad = new Ball(
-    world,
-    { x: 320, y: 5000, r: radius, color: 'blue' },
-    { isStatic: false, isSensor: true ,angle: wheelAngle}
-  )
-  blocks.push(rad);
-  rad.constrainTo(null, { pointB: { x: 320, y: 5000 }, stiffness: 1.0, draw: false });
+  // ...
 
-  cnt = 6;
-  cabinH = 120
-  cabinW = 20
-  cabinFloorW = 200
-  for (let i = 0; i < cnt; i++) {
-    let x = (radius - 10) * Math.sin(2 * PI / cnt * i);
-    let y = (radius - 10) * Math.cos(2 * PI / cnt * i);
-    // Create left and right cabins
-    let cabinLeft = new Block(world, { x: 3500 + x - 75, y: 560 + y - cabinH, w: cabinW, h: cabinH, color: 'red' }, { isStatic: false });
-    let cabinRight = new Block(world, { x: 3500 + x + 75, y: 560 + y - cabinH, w: cabinW, h: cabinH, color: 'green' }, { isStatic: false });
+// Riesenrad
+let radius = 370;
+rad = new Ball(
+  world,
+  { x: 320, y: 5000, r: radius, color: 'blue' },
+  { isStatic: false, isSensor: true, angle: wheelAngle }
+);
+blocks.push(rad);
+rad.constrainTo(null, { pointB: { x: 320, y: 5000 }, stiffness: 0.1, damping: 0.5, draw: false });
 
-    // Create a floor for the cabin
-    let cabinFloor = new Block(world, { x: 3500 + x, y: 560 + y + cabinH/2, w: cabinFloorW, h: cabinW, color: 'white' }, { isStatic: false });
+cnt = 6;
+cabinH = 120;
+cabinW = 20;
+cabinFloorW = 200;
+for (let i = 0; i < cnt; i++) {
+  let x = (radius - 10) * Math.sin((2 * PI * i) / cnt);
+  let y = (radius - 10) * Math.cos((2 * PI * i) / cnt);
+  // Create left and right cabins
+  let cabinLeft = new Block(world, { x: 3500 + x - 75, y: 560 + y - cabinH, w: cabinW, h: cabinH, color: 'red' }, { isStatic: false });
+  let cabinRight = new Block(world, { x: 3500 + x + 75, y: 560 + y - cabinH, w: cabinW, h: cabinH, color: 'green' }, { isStatic: false });
 
-    // Constrain left and right cabins to 'rad'
-    cabinLeft.constrainTo(rad, { pointA: { x: 0, y: cabinH/2 }, pointB: { x: x, y: y }, stiffness: 0.2, draw: true , length: cabinH});
-    cabinRight.constrainTo(rad, { pointA: { x: 0, y: cabinH/2 }, pointB: { x: x, y: y }, stiffness: 0.2, draw: true , length: cabinH});
-    
-    cabinLeft.constrainTo(cabinRight, { pointA: { x: -cabinW, y: 0 }, pointB: { x: cabinW, y: 0 }, stiffness: 0.8, draw: false , length: cabinFloorW})
+  // Create a floor for the cabin
+  let cabinFloor = new Block(world, { x: 3500 + x, y: 560 + y + cabinH / 2, w: cabinFloorW, h: cabinW, color: 'white' }, { isStatic: false });
 
-    // Constrain floor to left and right cabins
-    cabinFloor.constrainTo(cabinLeft, { pointA: { x: cabinW/2, y: cabinH/2 }, pointB: { x: -cabinFloorW/2, y: cabinW/2 }, stiffness: 0.8, draw: false, length: 0 });
-    cabinFloor.constrainTo(cabinLeft, { pointA: { x: cabinW/2, y: cabinH/2-cabinW/2 }, pointB: { x: -cabinFloorW/2, y: -cabinW/2 }, stiffness: 0.8, draw: false, length: 0 });
-    cabinFloor.constrainTo(cabinRight, { pointA: { x: -cabinW/2, y: cabinH/2 }, pointB: { x: cabinFloorW/2, y: cabinW/2 }, stiffness: 0.8, draw: false, length: 0 });
-    cabinFloor.constrainTo(cabinRight, { pointA: { x: -cabinW/2, y: cabinH/2-cabinW/2 }, pointB: { x: cabinFloorW/2, y: -cabinW/2 }, stiffness: 0.8, draw: false, length: 0 });
-    
+  // Constrain left and right cabins to 'rad'
+  cabinLeft.constrainTo(rad, { pointA: { x: 0, y: cabinH / 2 }, pointB: { x: x, y: y }, stiffness: 0.1, damping: 0.5, draw: true, length: cabinH });
+  cabinRight.constrainTo(rad, { pointA: { x: 0, y: cabinH / 2 }, pointB: { x: x, y: y }, stiffness: 0.1, damping: 0.5, draw: true, length: cabinH });
 
-    // Add blocks to the array
-    blocks.push(cabinLeft);
-    blocks.push(cabinRight);
-    blocks.push(cabinFloor);
-  }
+  cabinLeft.constrainTo(cabinRight, { pointA: { x: -cabinW, y: 0 }, pointB: { x: cabinW, y: 0 }, stiffness: 0.8, damping: 0.5, draw: false, length: cabinFloorW });
+
+  // Constrain floor to left and right cabins
+  cabinFloor.constrainTo(cabinLeft, { pointA: { x: cabinW / 2, y: cabinH / 2 }, pointB: { x: -cabinFloorW / 2, y: cabinW / 2 }, stiffness: 0.8, damping: 0.5, draw: false, length: 0 });
+  cabinFloor.constrainTo(cabinLeft, { pointA: { x: cabinW / 2, y: cabinH / 2 - cabinW / 2 }, pointB: { x: -cabinFloorW / 2, y: -cabinW / 2 }, stiffness: 0.8, damping: 0.5, draw: false, length: 0 });
+  cabinFloor.constrainTo(cabinRight, { pointA: { x: -cabinW / 2, y: cabinH / 2 }, pointB: { x: cabinFloorW / 2, y: cabinW / 2 }, stiffness: 0.8, damping: 0.5, draw: false, length: 0 });
+  cabinFloor.constrainTo(cabinRight, { pointA: { x: -cabinW / 2, y: cabinH / 2 - cabinW / 2 }, pointB: { x: cabinFloorW / 2, y: -cabinW / 2 }, stiffness: 0.8, damping: 0.5, draw: false, length: 0 });
+
+  // Add blocks to the array
+  blocks.push(cabinLeft);
+  blocks.push(cabinRight);
+  blocks.push(cabinFloor);
+}
+
+// ...
+
   
 
     const trampoline1 = new Block(
