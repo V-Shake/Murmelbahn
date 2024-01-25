@@ -80,7 +80,9 @@ function setup() {
     bgMusic.play();
     // bgm.play(); 
   });
-imageMode(CENTER)
+
+  imageMode(CENTER);
+
   canvasElem = document.getElementById('thecanvas');
 
   engine = Engine.create();
@@ -207,7 +209,7 @@ imageMode(CENTER)
   blocks.push(rad);
   rad.constrainTo(null, { pointB: { x: 3500, y: 500 }, stiffness: 1.0, draw: true });
 
-  cnt = 4;
+  cnt = 3;
   for (let i = 0; i < cnt; i++) {
     let x = (radius - 10) * Math.sin(2 * PI / cnt * i);
     let y = (radius - 10) * Math.cos(2 * PI / cnt * i);
