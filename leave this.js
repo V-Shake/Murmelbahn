@@ -77,9 +77,9 @@ imageMode(CENTER)
   canvasElem = document.getElementById('thecanvas');
 
   engine = Engine.create();
-  world = engine.world; 
+  world = engine.world; // Set the world property to the engine's world
 
-  new BlocksFromSVG(engine.world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true, friction: 10 });
+  new BlocksFromSVG(engine.world, './assets/graphics/foreground/static.svg', blocks, { isStatic: true, friction:1 });
 
   createFallingBook(1750, 35, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(2500, 650, { force: { x: 0, y: 0.1 } }, false);
@@ -87,12 +87,7 @@ imageMode(CENTER)
   createFallingBook(2250, 1376, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1850, 1376, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1500, 1376, { force: { x: 0, y: 0.005 } }, false);
-  const rabbit1 = createRabbit(800, 500);
-  const rabbit2 = createRabbit(1400, 500); // Adjust x-coordinate as needed
-  const rabbit3 = createRabbit(2000, 500); // Adjust x-coordinate as needed
-
-  // Add each rabbit to the rabbit array
-  rabbit.push(rabbit1, rabbit2, rabbit3);
+createRabbit (800, 1900)
 
   blocks.push(new BlockCore(engine.world, { x: -dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
   blocks.push(new BlockCore(engine.world, { x: dim.w + dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
@@ -120,8 +115,6 @@ imageMode(CENTER)
   ));
 
   blocks.push(murmel);
-
-
   hangingBox = new Block(
     engine.world, {
       x: 750, // Adjust the x-coordinate based on your layout
@@ -251,7 +244,7 @@ function draw() {
       block.draw();
     }
   });
-  animateRabbit();
+    animateRabbit();
   hangingBox.draw();
 
   // Draw the string (constraint)
