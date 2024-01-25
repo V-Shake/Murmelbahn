@@ -36,6 +36,7 @@ let ballOverlay;
 let bookImg;
 let fallingBook = [];
 let rabbitImg;
+let brownRabbitImg;
 const numRabbits = 3;
 const rabbits = [];
 const rabbit = [];
@@ -70,6 +71,8 @@ function preload() {
   ballSVG = loadImage('./assets/graphics/foreground/ball star.svg');
   fallingBookImg = loadImage('./assets/graphics/foreground/book.png');
   rabbitImg = loadImage('./assets/graphics/foreground/whiteRabbit.png');
+  brownRabbitImg = loadImage('./assets/graphics/foreground/brownRabbit.png');
+
 }
 
 function setup() {
@@ -130,20 +133,19 @@ function setup() {
 
   blocks.push(murmel);
 
-
   hangingBox = new Block(
     engine.world, {
-      x: 750, // Adjust the x-coordinate based on your layout
-      y: 100, // Adjust the y-coordinate based on your layout
-      w: 100,
-      h: 100,
-      color: 'cyan'
+      x: 3400,
+      y: 1700,
+      w: 292,
+      h: 489,
+      image: brownRabbitImg 
     },
-    { isStatic: false, density: 0.01 } // Adjust the density
+    { isStatic: false, density: 0.0005 }
   );
-
+  
   // Constrain the hanging box to a fixed point (create a shorter string)
-  hangingBox.constrainTo(null, { pointB: { x: 750, y: 50 }, length: 200, draw: true });
+  hangingBox.constrainTo(null, { pointB: { x: 3400, y: 1650 }, length: 200, draw: true });
 
   // Add the hanging box to the blocks array
   blocks.push(hangingBox);
@@ -153,7 +155,7 @@ function setup() {
   stringConstraint = Constraint.create({
     bodyA: hangingBox.body,
     pointA: { x: 0, y: -20 }, // Offset point for the string
-    pointB: { x: 750, y: 50 }, // Fixed point for the string
+    pointB: { x: 3400, y: 1650 }, // Fixed point for the string
     length: 0, // Initial length (will be adjusted later)
     stiffness: 0.1
   });
@@ -164,7 +166,7 @@ function setup() {
 
 
 
-  const soundSensor = createSoundSensor(engine.world, 104, 2437, 4500, 15, sounds, () => {
+  const soundSensor = createSoundSensor(engine.world, 104, 2437, 4450, 20, sounds, () => {
     console.log(' Sound sensor triggered by the ball!');
   });
 
