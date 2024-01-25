@@ -36,11 +36,9 @@ let ballOverlay;
 let bookImg;
 let fallingBook = [];
 let rabbitImg;
-let brownRabbitImg;
 const numRabbits = 3;
 const rabbits = [];
 const rabbit = [];
-let wheelAngle = 0;
 
 
 
@@ -72,8 +70,6 @@ function preload() {
   ballSVG = loadImage('./assets/graphics/foreground/ball star.svg');
   fallingBookImg = loadImage('./assets/graphics/foreground/book.png');
   rabbitImg = loadImage('./assets/graphics/foreground/whiteRabbit.png');
-  brownRabbitImg = loadImage('./assets/graphics/foreground/brownRabbit.png');
-
 }
 
 function setup() {
@@ -100,9 +96,9 @@ function setup() {
   createFallingBook(2250, 1376, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1850, 1376, { force: { x: 0, y: 0.005 } }, false);
   createFallingBook(1500, 1376, { force: { x: 0, y: 0.005 } }, false);
-  const rabbit1 = createRabbit(800, 3700);
-  const rabbit2 = createRabbit(1400, 4200); // Adjust x-coordinate as needed
-  const rabbit3 = createRabbit(2000, 3700); // Adjust x-coordinate as needed
+  const rabbit1 = createRabbit(800, 500);
+  const rabbit2 = createRabbit(1400, 500); // Adjust x-coordinate as needed
+  const rabbit3 = createRabbit(2000, 500); // Adjust x-coordinate as needed
 
   // Add each rabbit to the rabbit array
   rabbit.push(rabbit1, rabbit2, rabbit3);
@@ -134,19 +130,20 @@ function setup() {
 
   blocks.push(murmel);
 
+
   hangingBox = new Block(
     engine.world, {
-      x: 3400,
-      y: 1700,
-      w: 292,
-      h: 489,
-      image: brownRabbitImg 
+      x: 750, // Adjust the x-coordinate based on your layout
+      y: 100, // Adjust the y-coordinate based on your layout
+      w: 100,
+      h: 100,
+      color: 'cyan'
     },
-    { isStatic: false, density: 0.0005 }
+    { isStatic: false, density: 0.01 } // Adjust the density
   );
-  
+
   // Constrain the hanging box to a fixed point (create a shorter string)
-  hangingBox.constrainTo(null, { pointB: { x: 3400, y: 1650 }, length: 200, draw: true });
+  hangingBox.constrainTo(null, { pointB: { x: 750, y: 50 }, length: 200, draw: true });
 
   // Add the hanging box to the blocks array
   blocks.push(hangingBox);
@@ -156,7 +153,7 @@ function setup() {
   stringConstraint = Constraint.create({
     bodyA: hangingBox.body,
     pointA: { x: 0, y: -20 }, // Offset point for the string
-    pointB: { x: 3400, y: 1650 }, // Fixed point for the string
+    pointB: { x: 750, y: 50 }, // Fixed point for the string
     length: 0, // Initial length (will be adjusted later)
     stiffness: 0.1
   });
@@ -167,7 +164,7 @@ function setup() {
 
 
 
-  const soundSensor = createSoundSensor(engine.world, 104, 2437, 4450, 20, sounds, () => {
+  const soundSensor = createSoundSensor(engine.world, 104, 2437, 4500, 15, sounds, () => {
     console.log(' Sound sensor triggered by the ball!');
   });
 
@@ -195,46 +192,22 @@ function setup() {
   ; */
 
   // Riesenrad
-  let radius = 400;
+  let radius = 200;
   rad = new Ball(
     world,
     { x: 3500, y: 500, r: radius, color: 'blue' },
-    { isStatic: false, isSensor: true ,angle: wheelAngle}
+    { isStatic: false, isSensor: true }
   )
   blocks.push(rad);
   rad.constrainTo(null, { pointB: { x: 3500, y: 500 }, stiffness: 1.0, draw: true });
 
-  cnt = 6;
-  cabinH = 120
-  cabinW = 20
-  cabinFloorW = 200
+  cnt = 3;
   for (let i = 0; i < cnt; i++) {
     let x = (radius - 10) * Math.sin(2 * PI / cnt * i);
     let y = (radius - 10) * Math.cos(2 * PI / cnt * i);
-    // Create left and right cabins
-    let cabinLeft = new Block(world, { x: 3500 + x - 75, y: 560 + y - cabinH, w: cabinW, h: cabinH, color: 'red' }, { isStatic: false });
-    let cabinRight = new Block(world, { x: 3500 + x + 75, y: 560 + y - cabinH, w: cabinW, h: cabinH, color: 'green' }, { isStatic: false });
-
-    // Create a floor for the cabin
-    let cabinFloor = new Block(world, { x: 3500 + x, y: 560 + y + cabinH/2, w: cabinFloorW, h: cabinW, color: 'white' }, { isStatic: false });
-
-    // Constrain left and right cabins to 'rad'
-    cabinLeft.constrainTo(rad, { pointA: { x: 0, y: cabinH/2 }, pointB: { x: x, y: y }, stiffness: 0.2, draw: true , length: cabinH});
-    cabinRight.constrainTo(rad, { pointA: { x: 0, y: cabinH/2 }, pointB: { x: x, y: y }, stiffness: 0.2, draw: true , length: cabinH});
-    
-    cabinLeft.constrainTo(cabinRight, { pointA: { x: -cabinW, y: 0 }, pointB: { x: cabinW, y: 0 }, stiffness: 0.8, draw: false , length: cabinFloorW})
-
-    // Constrain floor to left and right cabins
-    cabinFloor.constrainTo(cabinLeft, { pointA: { x: cabinW/2, y: cabinH/2 }, pointB: { x: -cabinFloorW/2, y: cabinW/2 }, stiffness: 0.8, draw: false, length: 0 });
-    cabinFloor.constrainTo(cabinLeft, { pointA: { x: cabinW/2, y: cabinH/2-cabinW/2 }, pointB: { x: -cabinFloorW/2, y: -cabinW/2 }, stiffness: 0.8, draw: false, length: 0 });
-    cabinFloor.constrainTo(cabinRight, { pointA: { x: -cabinW/2, y: cabinH/2 }, pointB: { x: cabinFloorW/2, y: cabinW/2 }, stiffness: 0.8, draw: false, length: 0 });
-    cabinFloor.constrainTo(cabinRight, { pointA: { x: -cabinW/2, y: cabinH/2-cabinW/2 }, pointB: { x: cabinFloorW/2, y: -cabinW/2 }, stiffness: 0.8, draw: false, length: 0 });
-    
-
-    // Add blocks to the array
-    blocks.push(cabinLeft);
-    blocks.push(cabinRight);
-    blocks.push(cabinFloor);
+    let block = new Block(world, { x: 3500 + x, y: 560 + y, w: 150, h: 30, color: 'white' }, { isStatic: false })
+    blocks.push(block)
+    block.constrainTo(rad, { pointA: { x: 0, y: -10 }, pointB: { x: x, y: y }, stiffness: 1.0, draw: true });
   }
   
 
@@ -309,10 +282,6 @@ function draw() {
 
     murmel.draw();
   }
-  // update wheel
-  Matter.Body.setAngle(rad.body, wheelAngle);
-  Matter.Body.setAngularVelocity(rad.body, 0.15);
-  wheelAngle += 0.015;
 
   blocks.forEach(block => {
     if (block && block.draw) {
@@ -332,7 +301,6 @@ function draw() {
     }
   });
   animateRabbit();
-
   hangingBox.draw();
 
   // Draw the string (constraint)
