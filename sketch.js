@@ -21,6 +21,8 @@
   let bgMusic;
   let bgm;
   let squeak;
+  let trampolines = [];
+
 
   let canvasElem;
   let off = { x: 0, y: 0 };
@@ -31,7 +33,6 @@
   let bouncingSound;
   let bouncing;
   let keyPressedSound;
-  let backgroundImage;
   let ballSVG;
   let ballOverlay;
   let bookImg;
@@ -68,8 +69,6 @@
 
     console.log("Loaded audio file:", bouncingSound.src);
 
-    backgroundImage = loadImage('./assets/graphics/background/backdrop.jpg');
-    backgroundImage.resize(600, 1000);
     ballOverlay = loadImage('./assets/graphics/foreground/ball.svg');
     ballSVG = loadImage('./assets/graphics/foreground/ball star.svg');
     fallingBookImg = loadImage('./assets/graphics/foreground/book.png');
@@ -102,9 +101,9 @@
     createFallingBook(2250, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1850, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1500, 1376, { force: { x: 0, y: 0.005 } }, false);
-    const rabbit1 = createRabbit(800, 3700);
+    const rabbit1 = createRabbit(800, 3900);
     const rabbit2 = createRabbit(1400, 4200); // Adjust x-coordinate as needed
-    const rabbit3 = createRabbit(2000, 3700); // Adjust x-coordinate as needed
+    const rabbit3 = createRabbit(2000, 3900); // Adjust x-coordinate as needed
 
     // Add each rabbit to the rabbit array
     rabbit.push(rabbit1, rabbit2, rabbit3);
@@ -170,7 +169,7 @@
 
 
     const soundSensor = createSoundSensor(engine.world, 104, 2437, 4450, 20, sounds, () => {
-      restitution: 0.1,
+      restitution: 0.01,
 
       console.log(' Sound sensor triggered by the ball!');
     });
@@ -225,25 +224,32 @@
     }
     
 
-    // trampoline
-    const wrap = {
-      min: { x: 0, y: 0 },
-      max: { x: width, y: height }
-    };
-   // trampoline
-trampoline = new Block(
-  world,
-  { x: 3500, y: 6000, w: 500, h: 150 },
-  {
-    isStatic: true,
-    restitution: 1.1,
-    label: 'Trampoline', // Add this line
-    trigger: () => {
-      squeak.play();
-    }
-  }
-);
-
+    const trampoline1 = new Block(
+      world,
+      { x: 3500, y: 6000, w: 500, h: 150,},
+      {
+        isStatic: true,
+        restitution: 1.1,
+        label: 'Trampoline',
+        trigger: () => {
+          squeak.play();
+        },
+      }
+    );
+    trampolines.push(trampoline1);
+  
+    const trampoline2 = new Block(
+      world,
+      { x: 4100, y: 5600, w: 500, h: 150, },
+      {
+        isStatic: true,
+        restitution: 1.1,
+        label: 'Trampoline',
+        trigger: () => {
+        },
+      }
+    );
+    trampolines.push(trampoline2);
 
 
     Runner.run(engine);
@@ -290,7 +296,6 @@ trampoline = new Block(
     clear();
     let bgWidth = width;
     let bgHeight = height;
-    image(backgroundImage, 3840, 7200, bgWidth, bgHeight);
     scrollEndless(murmel ? murmel.body.position : { x: 0, y: 0 });
     //animateRabbit(); // Add this line to continuously update the rabbit's position
 
@@ -335,8 +340,10 @@ trampoline = new Block(
       stringConstraint.pointB.y
     );
 
-    trampoline.draw();
-  
+    trampolines.forEach((trampoline) => {
+      trampoline.draw();
+    });
+    
 
     }
 
