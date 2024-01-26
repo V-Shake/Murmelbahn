@@ -21,6 +21,8 @@
   let bgMusic;
   let bgm;
   let squeak;
+  let teddy;
+  let pig;
   let trampolines = [];
 
 
@@ -42,7 +44,7 @@
   const numRabbits = 3;
   const rabbits = [];
   const rabbit = [];
-let wheelAngle = 0;
+  let wheelAngle = 0;
 
 
 
@@ -66,6 +68,10 @@ let wheelAngle = 0;
     bgMusic = new Audio('./assets/audio/bgmusic.mp3');
     bgm = new Audio('./assets/audio/bgm.mp3')
     squeak = new Audio('./assets/audio/squeak.mp3')
+    teddy = new Audio('./assets/audio/teddy.mp3')
+    pig = new Audio('./assets/audio/pig.mp3')
+
+
 
 
     console.log("Loaded audio file:", bouncingSound.src);
@@ -102,9 +108,9 @@ let wheelAngle = 0;
     createFallingBook(2050, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1650, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1400, 1376, { force: { x: 0, y: 0.005 } }, false);
-    const rabbit1 = createRabbit(800, 3900);
-    const rabbit2 = createRabbit(1400, 4200); // Adjust x-coordinate as needed
-    const rabbit3 = createRabbit(2000, 3900); // Adjust x-coordinate as needed
+    const rabbit1 = createRabbit(800, 4400);
+    const rabbit2 = createRabbit(1400, 4400); // Adjust x-coordinate as needed
+    const rabbit3 = createRabbit(2000, 4400); // Adjust x-coordinate as needed
 
     // Add each rabbit to the rabbit array
     rabbit.push(rabbit1, rabbit2, rabbit3);
@@ -139,7 +145,7 @@ let wheelAngle = 0;
   hangingBox = new Block(
     engine.world, {
       x: 3200,
-      y: 1750,
+      y: 1700,
       w: 244,
       h: 409,
       image: brownRabbitImg 
@@ -148,7 +154,7 @@ let wheelAngle = 0;
   );
   
   // Constrain the hanging box to a fixed point (create a shorter string)
-  hangingBox.constrainTo(null, { pointB: { x: 3200, y: 1750 }, length: 200, draw: false });
+  hangingBox.constrainTo(null, { pointB: { x: 3200, y: 1700 }, length: 200, draw: false });
 
     // Add the hanging box to the blocks array
     blocks.push(hangingBox);
@@ -158,7 +164,7 @@ let wheelAngle = 0;
   stringConstraint = Constraint.create({
     bodyA: hangingBox.body,
     pointA: { x: 0, y: -20 }, // Offset point for the string
-    pointB: { x: 3200, y: 1750 }, // Fixed point for the string
+    pointB: { x: 3200, y: 1700 }, // Fixed point for the string
     length: 0, // Initial length (will be adjusted later)
     stiffness: 0.1
   });
@@ -166,7 +172,7 @@ let wheelAngle = 0;
     stringConstraint = Constraint.create({
       bodyA: hangingBox.body,
       pointA: { x: 0, y: -20 }, // Offset point for the string
-      pointB: { x: 3200, y: 1750 }, // Fixed point for the string
+      pointB: { x: 3200, y: 1700 }, // Fixed point for the string
       length: 0, // Initial length (will be adjusted later)
       stiffness: 0.1
     });
@@ -181,37 +187,60 @@ let wheelAngle = 0;
     }, { restitution: 0.5 }); // Adjust the restitution value as needed
     
     blocks.push(soundSensor);
+    blocks.push(soundSensor);
+
     Events.on(engine, 'collisionStart', function (event) {
       var pairs = event.pairs;
+    
       pairs.forEach((pair, i) => {
+        // Handle collision with Murmel
         if (pair.bodyA.label == 'Murmel') {
-          pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block)
-          // bouncing.play();
-        }
-        if (pair.bodyB.label == 'Murmel') {
-          pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block)
-          bouncing.play();
-        }
-        if (pair.bodyA.label == 'Murmel' && pair.bodyB.label == 'Trampoline') {
-          squeak.play();
-        }
-        if (pair.bodyB.label == 'Murmel' && pair.bodyA.label == 'Trampoline') {
-          squeak.play();
+          pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block);
+          bouncing.play(); // Play bouncing sound
         }
     
-      })
-    })
-
-
-    // Create and add the 3 rabbits
-  /*  for (let i = 0; i < numRabbits; i++) {
-      const newRabbitBody = Bodies.rectangle(rabbit.x + i * (rabbit.width + 10), windowHeight + 100, rabbit.width, rabbit.height, rabbitOptions);
-      rabbits.push(newRabbitBody);
-    }
-    ; */
-
-  // ...
-
+        if (pair.bodyB.label == 'Murmel') {
+          pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block);
+          bouncing.play(); // Play bouncing sound
+        }
+    
+        // Handle collision with Trampoline
+        if (pair.bodyA.label == 'Murmel' && pair.bodyB.label == 'Trampoline') {
+          // Check which trampoline was hit and play the corresponding sound
+          if (pair.bodyB.plugin.block == trampolines[0]) {
+            squeak.play(); // Play the "squeak" sound for the first trampoline
+          } else if (pair.bodyB.plugin.block == trampolines[1]) {
+            teddy.play(); // Play the "teddy" sound for the second trampoline
+          } else if (pair.bodyB.plugin.block == trampolines[2]) {
+            pig.play(); // Play the "piggy" sound for the third trampoline
+          }
+        }
+    
+        if (pair.bodyB.label == 'Murmel' && pair.bodyA.label == 'Trampoline') {
+          // Check which trampoline was hit and play the corresponding sound
+          if (pair.bodyA.plugin.block == trampolines[0]) {
+            squeak.play(); // Play the "squeak" sound for the first trampoline
+          } else if (pair.bodyA.plugin.block == trampolines[1]) {
+            teddy.play(); // Play the "teddy" sound for the second trampoline
+          } else if (pair.bodyA.plugin.block == trampolines[2]) {
+            pig.play(); // Play the "piggy" sound for the third trampoline
+          }
+        }
+    
+        // Handle collision with Sound Sensor
+        if (pair.bodyA.label == 'Murmel' && pair.bodyB.label == 'SoundSensor') {
+          // Additional handling for sound sensor collision
+          console.log('Murmel collided with Sound Sensor');
+        }
+    
+        if (pair.bodyB.label == 'Murmel' && pair.bodyA.label == 'SoundSensor') {
+          // Additional handling for sound sensor collision
+          console.log('Murmel collided with Sound Sensor');
+        }
+      });
+    });
+    
+    
 // Riesenrad
 let radius = 370;
 rad = new Ball(
@@ -222,7 +251,7 @@ rad = new Ball(
 blocks.push(rad);
 rad.constrainTo(null, { pointB: { x: 320, y: 5000 }, stiffness: 0.1, damping: 0.5, draw: false });
 
-cnt = 6;
+cnt = 2;
 cabinH = 120;
 cabinW = 20;
 cabinFloorW = 200;
@@ -274,16 +303,34 @@ for (let i = 0; i < cnt; i++) {
   
     const trampoline2 = new Block(
       world,
-      { x: 4100, y: 5600, w: 500, h: 150, },
+      { x: 2600, y: 6000, w: 500, h: 150, color: "yellow" },
       {
         isStatic: true,
         restitution: 1.1,
         label: 'Trampoline',
         trigger: () => {
+          teddy.play();
+          
         },
       }
     );
     trampolines.push(trampoline2);
+
+    const trampoline3 = new Block(
+      world,
+      { x: 1500, y: 6000, w: 500, h: 150, color: "magenta" },
+      {
+        isStatic: true,
+        restitution: 1.1,
+        label: 'Trampoline',
+        trigger: () => {
+          pig.play();
+          
+        },
+      }
+    );
+    trampolines.push(trampoline3);
+
 
 
     Runner.run(engine);
@@ -310,7 +357,6 @@ for (let i = 0; i < cnt; i++) {
         } else {
           Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 2, y: 0 });
           keyPressedSound.play();
-        // rabbit.y = 890;
         }
         break;
       case 65:

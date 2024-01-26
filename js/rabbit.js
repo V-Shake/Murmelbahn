@@ -1,8 +1,8 @@
 const rabbitWidth = 199;
 const rabbitHeight = 424;
-const rabbitStartY = 3700;
-const rabbitEndY = 4700;
-let rabbitSpeed = 2;
+const rabbitStartY = 3800;
+const rabbitEndY = 4400;
+let rabbitSpeed = 4;
 
 // Create rabbit at a specific position
 
