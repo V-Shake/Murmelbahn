@@ -140,8 +140,8 @@ let wheelAngle = 0;
     engine.world, {
       x: 3400,
       y: 1700,
-      w: 292,
-      h: 489,
+      w: 244,
+      h: 409,
       image: brownRabbitImg 
     },
     { isStatic: false, density: 0.0005 }
