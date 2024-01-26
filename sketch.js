@@ -138,7 +138,7 @@ let wheelAngle = 0;
 
   hangingBox = new Block(
     engine.world, {
-      x: 3400,
+      x: 3380,
       y: 1700,
       w: 244,
       h: 409,
