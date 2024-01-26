@@ -29,7 +29,7 @@
   let canvasElem;
   let off = { x: 0, y: 0 };
 
-  const dim = { w: 3840, h: 7200 };
+  const dim = { w: 3840, h: 7605.66 };
   let direction = 0.2;
 
   let bouncingSound;
@@ -303,7 +303,7 @@ for (let i = 0; i < cnt; i++) {
   
     const trampoline2 = new Block(
       world,
-      { x: 2600, y: 6000, w: 500, h: 150, color: "yellow" },
+      { x: 2600, y: 6000, w: 500, h: 20, color: "yellow" },
       {
         isStatic: true,
         restitution: 1.1,
@@ -318,7 +318,7 @@ for (let i = 0; i < cnt; i++) {
 
     const trampoline3 = new Block(
       world,
-      { x: 1500, y: 6000, w: 500, h: 150, color: "magenta" },
+      { x: 1500, y: 6000, w: 500, h: 20, color: "magenta" },
       {
         isStatic: true,
         restitution: 1.1,
