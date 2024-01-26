@@ -99,9 +99,9 @@ let wheelAngle = 0;
     createFallingBook(1750, 35, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(2500, 650, { force: { x: 0, y: 0.1 } }, false);
 
-    createFallingBook(2250, 1376, { force: { x: 0, y: 0.005 } }, false);
-    createFallingBook(1850, 1376, { force: { x: 0, y: 0.005 } }, false);
-    createFallingBook(1500, 1376, { force: { x: 0, y: 0.005 } }, false);
+    createFallingBook(2050, 1376, { force: { x: 0, y: 0.005 } }, false);
+    createFallingBook(1650, 1376, { force: { x: 0, y: 0.005 } }, false);
+    createFallingBook(1400, 1376, { force: { x: 0, y: 0.005 } }, false);
     const rabbit1 = createRabbit(800, 3900);
     const rabbit2 = createRabbit(1400, 4200); // Adjust x-coordinate as needed
     const rabbit3 = createRabbit(2000, 3900); // Adjust x-coordinate as needed
@@ -138,8 +138,8 @@ let wheelAngle = 0;
 
   hangingBox = new Block(
     engine.world, {
-      x: 3380,
-      y: 1700,
+      x: 3200,
+      y: 1750,
       w: 244,
       h: 409,
       image: brownRabbitImg 
@@ -148,7 +148,7 @@ let wheelAngle = 0;
   );
   
   // Constrain the hanging box to a fixed point (create a shorter string)
-  hangingBox.constrainTo(null, { pointB: { x: 3400, y: 1650 }, length: 200, draw: true });
+  hangingBox.constrainTo(null, { pointB: { x: 3200, y: 1750 }, length: 200, draw: false });
 
     // Add the hanging box to the blocks array
     blocks.push(hangingBox);
@@ -158,7 +158,7 @@ let wheelAngle = 0;
   stringConstraint = Constraint.create({
     bodyA: hangingBox.body,
     pointA: { x: 0, y: -20 }, // Offset point for the string
-    pointB: { x: 3400, y: 1650 }, // Fixed point for the string
+    pointB: { x: 3200, y: 1750 }, // Fixed point for the string
     length: 0, // Initial length (will be adjusted later)
     stiffness: 0.1
   });
@@ -166,7 +166,7 @@ let wheelAngle = 0;
     stringConstraint = Constraint.create({
       bodyA: hangingBox.body,
       pointA: { x: 0, y: -20 }, // Offset point for the string
-      pointB: { x: 3400, y: 1650 }, // Fixed point for the string
+      pointB: { x: 3200, y: 1750 }, // Fixed point for the string
       length: 0, // Initial length (will be adjusted later)
       stiffness: 0.1
     });
