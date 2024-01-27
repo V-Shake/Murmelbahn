@@ -45,6 +45,7 @@
   const rabbits = [];
   let wheelAngle = 0;
   let ferrisWheelImg;
+  
 
 
 
