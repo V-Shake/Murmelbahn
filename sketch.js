@@ -43,8 +43,8 @@
   let brownRabbitImg;
   const numRabbits = 3;
   const rabbits = [];
-  const rabbit = [];
   let wheelAngle = 0;
+  let ferrisWheelImg;
 
 
 
@@ -66,11 +66,10 @@
     bouncingSound = new Audio('./assets/audio/rubber-ball-bouncing-98700.mp3');
     bouncing = new Audio ('./assets/audio/bouncing.mp3');
     bgMusic = new Audio('./assets/audio/bgmusic.mp3');
-    bgm = new Audio('./assets/audio/bgm.mp3')
-    squeak = new Audio('./assets/audio/squeak.mp3')
-    teddy = new Audio('./assets/audio/teddy.mp3')
-    pig = new Audio('./assets/audio/pig.mp3')
-
+    bgm = new Audio('./assets/audio/bgm.mp3');
+    squeak = new Audio('./assets/audio/squeak.mp3');
+    teddy = new Audio('./assets/audio/teddy.mp3');
+    pig = new Audio('./assets/audio/pig.mp3');
 
 
 
@@ -81,6 +80,7 @@
     fallingBookImg = loadImage('./assets/graphics/foreground/book.png');
     rabbitImg = loadImage('./assets/graphics/foreground/whiteRabbit.png');
     brownRabbitImg = loadImage('./assets/graphics/foreground/brownRabbit.png');
+    ferrisWheelImg = loadimage('./assets/graphics/foreground/ferrisWheel.png');
 
 }
 
@@ -108,12 +108,12 @@
     createFallingBook(2050, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1650, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1400, 1376, { force: { x: 0, y: 0.005 } }, false);
-    const rabbit1 = createRabbit(800, 4400);
-    const rabbit2 = createRabbit(1400, 4400); // Adjust x-coordinate as needed
-    const rabbit3 = createRabbit(2000, 4400); // Adjust x-coordinate as needed
+    const rabbit1 = new Rabbit(world,x=800, y=4050);
+    const rabbit2 = new Rabbit(world,x=1400, y=4140); // Adjust x-coordinate as needed
+    const rabbit3 = new Rabbit(world,x=2000, y=3990); // Adjust x-coordinate as needed
 
     // Add each rabbit to the rabbit array
-    rabbit.push(rabbit1, rabbit2, rabbit3);
+    rabbits.push(rabbit1, rabbit2, rabbit3);
 
     blocks.push(new BlockCore(engine.world, { x: -dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
     blocks.push(new BlockCore(engine.world, { x: dim.w + dim.w / 2, y: dim.h / 2, w: dim.w, h: dim.h, color: 'black' }, { isStatic: true }));
@@ -242,14 +242,14 @@
     
     
 // Riesenrad
-let radius = 370;
+let radius = 377;
 rad = new Ball(
   world,
-  { x: 500, y: 4880, r: radius, color: 'blue' },
+  { x: 565, y: 4890, r: radius, image: ferrisWheelImg},
   { isStatic: false, isSensor: true, angle: wheelAngle }
 );
 blocks.push(rad);
-rad.constrainTo(null, { pointB: { x: 500, y: 4880 }, stiffness: 0.1, damping: 0.5, draw: false });
+rad.constrainTo(null, { pointB: { x: 565, y: 4890 }, stiffness: 0.1, damping: 0.5, draw: false });
 
 cnt = 6;
 cabinH = 120;
@@ -406,12 +406,12 @@ for (let i = 0; i < cnt; i++) {
       }
     });
     
-    rabbit.forEach(block => {
-      if (block && block.draw) {
-        block.draw();
+    rabbits.forEach(rabbit => {
+      if (rabbit && rabbit.draw) {
+        rabbit.draw();
+        rabbit.animate();
       }
     });
-    animateRabbit();
 
     hangingBox.draw();
 
