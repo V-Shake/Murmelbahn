@@ -32,7 +32,7 @@
   let canvasElem;
   let off = { x: 0, y: 0 };
 
-  const dim = { w: 3840, h: 7605.66 };
+  const dim = { w: 3841, h: 7778 };
   let direction = 0.2;
 
   let bouncingSound;
@@ -206,6 +206,7 @@
     blocks.push(soundSensor);
     blocks.push(soundSensor);
 
+<<<<<<< HEAD
     // ... (your existing code)
 
 Events.on(engine, 'collisionStart', function (event) {
@@ -265,16 +266,69 @@ Events.on(engine, 'collisionStart', function (event) {
 
 // ... (the rest of your existing code)
 
+=======
+    Events.on(engine, 'collisionStart', function (event) {
+      var pairs = event.pairs;
+    
+      pairs.forEach((pair, i) => {
+        // Handle collision with Murmel
+        if (pair.bodyA.label == 'Murmel') {
+          pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block);
+          bouncing.play(); // Play bouncing sound
+        }
+    
+        if (pair.bodyB.label == 'Murmel') {
+          pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block);
+          bouncing.play(); // Play bouncing sound
+        }
+    
+        // Handle collision with Trampoline
+        if (pair.bodyA.label == 'Murmel' && pair.bodyB.label == 'Trampoline') {
+          // Check which trampoline was hit and play the corresponding sound
+          if (pair.bodyB.plugin.block == trampolines[0]) {
+            squeak.play(); // Play the "squeak" sound for the first trampoline
+          } else if (pair.bodyB.plugin.block == trampolines[1]) {
+            pig.play(); // Play the "teddy" sound for the second trampoline
+          } else if (pair.bodyB.plugin.block == trampolines[2]) {
+            teddy.play(); // Play the "piggy" sound for the third trampoline
+          }
+        }
+    
+        if (pair.bodyB.label == 'Murmel' && pair.bodyA.label == 'Trampoline') {
+          // Check which trampoline was hit and play the corresponding sound
+          if (pair.bodyA.plugin.block == trampolines[0]) {
+            squeak.play(); // Play the "squeak" sound for the first trampoline
+          } else if (pair.bodyA.plugin.block == trampolines[1]) {
+            pig.play(); // Play the "teddy" sound for the second trampoline
+          } else if (pair.bodyA.plugin.block == trampolines[2]) {
+            teddy.play(); // Play the "piggy" sound for the third trampoline
+          }
+        }
+    
+        // Handle collision with Sound Sensor
+        if (pair.bodyA.label == 'Murmel' && pair.bodyB.label == 'SoundSensor') {
+          // Additional handling for sound sensor collision
+          console.log('Murmel collided with Sound Sensor');
+        }
+    
+        if (pair.bodyB.label == 'Murmel' && pair.bodyA.label == 'SoundSensor') {
+          // Additional handling for sound sensor collision
+          console.log('Murmel collided with Sound Sensor');
+        }
+      });
+    });
+    
+>>>>>>> 06e5d8881601ee357b7f388e8fe0bd40286db8d2
     
 // Riesenrad
 let radius = 377;
 rad = new Ball(
   world,
-  { x: 565, y: 4890, r: radius, image: ferrisWheelImg},
+  { x: 600, y: 4938, r: radius, image: ferrisWheelImg},
   { isStatic: false, isSensor: true, angle: wheelAngle }
 );
 blocks.push(rad);
-rad.constrainTo(null, { pointB: { x: 565, y: 4890 }, stiffness: 0.1, damping: 0.5, draw: false });
+rad.constrainTo(null, { pointB: { x: 600, y: 4938 }, stiffness: 0.1, damping: 0.5, draw: false });
 
 cnt = 6;
 cabinH = 120;
@@ -314,7 +368,7 @@ for (let i = 0; i < cnt; i++) {
 
     const trampoline1 = new Block(
       world,
-      { x: 3500, y: 6000, w: 500, h: 150,},
+      { x: 3460, y: 6170, w: 500, h: 150},
       {
         isStatic: true,
         restitution: 1.1,
@@ -328,13 +382,13 @@ for (let i = 0; i < cnt; i++) {
   
     const trampoline2 = new Block(
       world,
-      { x: 2600, y: 6000, w: 500, h: 20, color: "yellow" },
+      { x: 2630, y: 6170, w: 500, h: 100},
       {
         isStatic: true,
         restitution: 1.1,
         label: 'Trampoline',
         trigger: () => {
-          teddy.play();
+          pig.play();
           
         },
       }
@@ -343,13 +397,13 @@ for (let i = 0; i < cnt; i++) {
 
     const trampoline3 = new Block(
       world,
-      { x: 1500, y: 6000, w: 500, h: 20, color: "magenta" },
+      { x: 1575, y: 6170, w: 500, h: 100 },
       {
         isStatic: true,
         restitution: 1.1,
         label: 'Trampoline',
         trigger: () => {
-          pig.play();
+          teddy.play();
           
         },
       }
