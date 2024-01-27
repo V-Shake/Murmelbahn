@@ -45,6 +45,7 @@
   const rabbits = [];
   let wheelAngle = 0;
   let ferrisWheelImg;
+  
 
 
 
@@ -80,7 +81,7 @@
     fallingBookImg = loadImage('./assets/graphics/foreground/book.png');
     rabbitImg = loadImage('./assets/graphics/foreground/whiteRabbit.png');
     brownRabbitImg = loadImage('./assets/graphics/foreground/brownRabbit.png');
-    ferrisWheelImg = loadimage('./assets/graphics/foreground/ferrisWheel.png');
+    ferrisWheelImg = loadImage('./assets/graphics/foreground/ferrisWheel.png');
 
 }
 
