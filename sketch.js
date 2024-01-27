@@ -112,8 +112,8 @@
     createFallingBook(1750, 35, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(2500, 650, { force: { x: 0, y: 0.1 } }, false);
 
-    createFallingBook(2050, 1376, { force: { x: 0, y: 0.005 } }, false);
-    createFallingBook(1650, 1376, { force: { x: 0, y: 0.005 } }, false);
+    createFallingBook(1800, 1376, { force: { x: 0, y: 0.005 } }, false);
+    createFallingBook(1600, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1400, 1376, { force: { x: 0, y: 0.005 } }, false);
     const rabbit1 = new Rabbit(world,x=800, y=4050);
     const rabbit2 = new Rabbit(world,x=1400, y=4140); // Adjust x-coordinate as needed
@@ -206,8 +206,6 @@
     blocks.push(soundSensor);
     blocks.push(soundSensor);
 
-<<<<<<< HEAD
-    // ... (your existing code)
 
 Events.on(engine, 'collisionStart', function (event) {
   var pairs = event.pairs;
@@ -242,9 +240,9 @@ Events.on(engine, 'collisionStart', function (event) {
       // Check which trampoline was hit and play the corresponding sound
       if (pair.bodyA.plugin.block == trampolines[0]) {
         squeak.play(); // Play the "squeak" sound for the first trampoline
-      } else if (pair.bodyA.plugin.block == trampolines[1]) {
-        teddy.play(); // Play the "teddy" sound for the second trampoline
       } else if (pair.bodyA.plugin.block == trampolines[2]) {
+        teddy.play(); // Play the "teddy" sound for the second trampoline
+      } else if (pair.bodyA.plugin.block == trampolines[1]) {
         pig.play(); // Play the "piggy" sound for the third trampoline
       } else if (pair.bodyA.plugin.block == trampoline4) {
         endBell.play(); // Play the "endBell" sound for the 4th trampoline
@@ -266,60 +264,6 @@ Events.on(engine, 'collisionStart', function (event) {
 
 // ... (the rest of your existing code)
 
-=======
-    Events.on(engine, 'collisionStart', function (event) {
-      var pairs = event.pairs;
-    
-      pairs.forEach((pair, i) => {
-        // Handle collision with Murmel
-        if (pair.bodyA.label == 'Murmel') {
-          pair.bodyA.plugin.block.collideWith(pair.bodyB.plugin.block);
-          bouncing.play(); // Play bouncing sound
-        }
-    
-        if (pair.bodyB.label == 'Murmel') {
-          pair.bodyB.plugin.block.collideWith(pair.bodyA.plugin.block);
-          bouncing.play(); // Play bouncing sound
-        }
-    
-        // Handle collision with Trampoline
-        if (pair.bodyA.label == 'Murmel' && pair.bodyB.label == 'Trampoline') {
-          // Check which trampoline was hit and play the corresponding sound
-          if (pair.bodyB.plugin.block == trampolines[0]) {
-            squeak.play(); // Play the "squeak" sound for the first trampoline
-          } else if (pair.bodyB.plugin.block == trampolines[1]) {
-            pig.play(); // Play the "teddy" sound for the second trampoline
-          } else if (pair.bodyB.plugin.block == trampolines[2]) {
-            teddy.play(); // Play the "piggy" sound for the third trampoline
-          }
-        }
-    
-        if (pair.bodyB.label == 'Murmel' && pair.bodyA.label == 'Trampoline') {
-          // Check which trampoline was hit and play the corresponding sound
-          if (pair.bodyA.plugin.block == trampolines[0]) {
-            squeak.play(); // Play the "squeak" sound for the first trampoline
-          } else if (pair.bodyA.plugin.block == trampolines[1]) {
-            pig.play(); // Play the "teddy" sound for the second trampoline
-          } else if (pair.bodyA.plugin.block == trampolines[2]) {
-            teddy.play(); // Play the "piggy" sound for the third trampoline
-          }
-        }
-    
-        // Handle collision with Sound Sensor
-        if (pair.bodyA.label == 'Murmel' && pair.bodyB.label == 'SoundSensor') {
-          // Additional handling for sound sensor collision
-          console.log('Murmel collided with Sound Sensor');
-        }
-    
-        if (pair.bodyB.label == 'Murmel' && pair.bodyA.label == 'SoundSensor') {
-          // Additional handling for sound sensor collision
-          console.log('Murmel collided with Sound Sensor');
-        }
-      });
-    });
-    
->>>>>>> 06e5d8881601ee357b7f388e8fe0bd40286db8d2
-    
 // Riesenrad
 let radius = 377;
 rad = new Ball(
@@ -388,7 +332,7 @@ for (let i = 0; i < cnt; i++) {
         restitution: 1.1,
         label: 'Trampoline',
         trigger: () => {
-          pig.play();
+          teddy.play();
           
         },
       }
@@ -403,7 +347,7 @@ for (let i = 0; i < cnt; i++) {
         restitution: 1.1,
         label: 'Trampoline',
         trigger: () => {
-          teddy.play();
+          pig.play();
           
         },
       }
@@ -412,7 +356,7 @@ for (let i = 0; i < cnt; i++) {
 
     const trampoline4 = new Block(
       world,
-      { x: 3000, y: 7500, w: 500, h: 150, color: "orange"},
+      { x: 3000, y: 7500, w: 500, h: 150, },
       {
         isStatic: true,
         label: 'Trampoline',
