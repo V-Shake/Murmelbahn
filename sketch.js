@@ -151,7 +151,7 @@
       h: 409,
       image: brownRabbitImg 
     },
-    { isStatic: false, density: 0.0005 }
+    { isStatic: false, density: 0.0003 }
   );
   
   // Constrain the hanging box to a fixed point (create a shorter string)
@@ -250,7 +250,7 @@ rad = new Ball(
   { isStatic: false, isSensor: true, angle: wheelAngle }
 );
 blocks.push(rad);
-rad.constrainTo(null, { pointB: { x: 600, y: 4938 }, stiffness: 0.1, damping: 0.5, draw: false });
+rad.constrainTo(null, { pointB: { x: 600, y: 4938 }, stiffness: 0.1, damping: 0.1, draw: false });
 
 cnt = 6;
 cabinH = 120;
@@ -267,16 +267,16 @@ for (let i = 0; i < cnt; i++) {
   let cabinFloor = new Block(world, { x: 3500 + x, y: 560 + y + cabinH / 2, w: cabinFloorW, h: cabinW, color: 'white' }, { isStatic: false });
 
   // Constrain left and right cabins to 'rad'
-  cabinLeft.constrainTo(rad, { pointA: { x: 0, y: cabinH / 2 }, pointB: { x: x, y: y }, stiffness: 0.1, damping: 0.5, draw: true, length: cabinH });
-  cabinRight.constrainTo(rad, { pointA: { x: 0, y: cabinH / 2 }, pointB: { x: x, y: y }, stiffness: 0.1, damping: 0.5, draw: true, length: cabinH });
+  cabinLeft.constrainTo(rad, { pointA: { x: 0, y: cabinH / 2 }, pointB: { x: x, y: y }, stiffness: 0.1, damping: 0.12, draw: true, length: cabinH });
+  cabinRight.constrainTo(rad, { pointA: { x: 0, y: cabinH / 2 }, pointB: { x: x, y: y }, stiffness: 0.1, damping: 0.12, draw: true, length: cabinH });
 
-  cabinLeft.constrainTo(cabinRight, { pointA: { x: -cabinW, y: 0 }, pointB: { x: cabinW, y: 0 }, stiffness: 0.8, damping: 0.5, draw: false, length: cabinFloorW });
+  cabinLeft.constrainTo(cabinRight, { pointA: { x: -cabinW, y: 0 }, pointB: { x: cabinW, y: 0 }, stiffness: 0.8, damping: 0.12, draw: false, length: cabinFloorW });
 
   // Constrain floor to left and right cabins
-  cabinFloor.constrainTo(cabinLeft, { pointA: { x: cabinW / 2, y: cabinH / 2 }, pointB: { x: -cabinFloorW / 2, y: cabinW / 2 }, stiffness: 0.8, damping: 0.5, draw: false, length: 0 });
-  cabinFloor.constrainTo(cabinLeft, { pointA: { x: cabinW / 2, y: cabinH / 2 - cabinW / 2 }, pointB: { x: -cabinFloorW / 2, y: -cabinW / 2 }, stiffness: 0.8, damping: 0.5, draw: false, length: 0 });
-  cabinFloor.constrainTo(cabinRight, { pointA: { x: -cabinW / 2, y: cabinH / 2 }, pointB: { x: cabinFloorW / 2, y: cabinW / 2 }, stiffness: 0.8, damping: 0.5, draw: false, length: 0 });
-  cabinFloor.constrainTo(cabinRight, { pointA: { x: -cabinW / 2, y: cabinH / 2 - cabinW / 2 }, pointB: { x: cabinFloorW / 2, y: -cabinW / 2 }, stiffness: 0.8, damping: 0.5, draw: false, length: 0 });
+  cabinFloor.constrainTo(cabinLeft, { pointA: { x: cabinW / 2, y: cabinH / 2 }, pointB: { x: -cabinFloorW / 2, y: cabinW / 2 }, stiffness: 0.8, damping: 0.1, draw: false, length: 0 });
+  cabinFloor.constrainTo(cabinLeft, { pointA: { x: cabinW / 2, y: cabinH / 2 - cabinW / 2 }, pointB: { x: -cabinFloorW / 2, y: -cabinW / 2 }, stiffness: 0.8, damping: 0.1, draw: false, length: 0 });
+  cabinFloor.constrainTo(cabinRight, { pointA: { x: -cabinW / 2, y: cabinH / 2 }, pointB: { x: cabinFloorW / 2, y: cabinW / 2 }, stiffness: 0.8, damping: 0.1, draw: false, length: 0 });
+  cabinFloor.constrainTo(cabinRight, { pointA: { x: -cabinW / 2, y: cabinH / 2 - cabinW / 2 }, pointB: { x: cabinFloorW / 2, y: -cabinW / 2 }, stiffness: 0.8, damping: 0.1, draw: false, length: 0 });
 
   // Add blocks to the array
   blocks.push(cabinLeft);
