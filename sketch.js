@@ -245,13 +245,13 @@
 let radius = 370;
 rad = new Ball(
   world,
-  { x: 320, y: 5000, r: radius, color: 'blue' },
+  { x: 500, y: 4880, r: radius, color: 'blue' },
   { isStatic: false, isSensor: true, angle: wheelAngle }
 );
 blocks.push(rad);
-rad.constrainTo(null, { pointB: { x: 320, y: 5000 }, stiffness: 0.1, damping: 0.5, draw: false });
+rad.constrainTo(null, { pointB: { x: 500, y: 4880 }, stiffness: 0.1, damping: 0.5, draw: false });
 
-cnt = 2;
+cnt = 6;
 cabinH = 120;
 cabinW = 20;
 cabinFloorW = 200;
