@@ -113,9 +113,9 @@
     createFallingBook(1750, 35, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(2500, 650, { force: { x: 0, y: 0.1 } }, false);
 
-    createFallingBook(1800, 1376, { force: { x: 0, y: 0.005 } }, false);
+    createFallingBook(1900, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1600, 1376, { force: { x: 0, y: 0.005 } }, false);
-    createFallingBook(1400, 1376, { force: { x: 0, y: 0.005 } }, false);
+    createFallingBook(1300, 1376, { force: { x: 0, y: 0.005 } }, false);
     const rabbit1 = new Rabbit(world,x=800, y=4050);
     const rabbit2 = new Rabbit(world,x=1400, y=4140); // Adjust x-coordinate as needed
     const rabbit3 = new Rabbit(world,x=2000, y=3990); // Adjust x-coordinate as needed
@@ -401,7 +401,7 @@ blocks.push(rad);
 
         if (active === -1) {
           active = 0;
-          murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, xfriction: 0, frictionAir: 0 });
+          murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0013, restitution: 0.3, friction: 0, frictionAir: 0 });
 
           blocks.unshift(murmel);
         // } else {
