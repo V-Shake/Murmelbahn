@@ -48,8 +48,7 @@
   const rabbits = [];
   let wheelAngle = 0;
   let ferrisWheelImg;
-  
-
+  let wheelTrigger = false;
 
 
   let sounds = [
@@ -87,6 +86,7 @@
     rabbitImg = loadImage('./assets/graphics/foreground/whiteRabbit.png');
     brownRabbitImg = loadImage('./assets/graphics/foreground/brownRabbit.png');
     ferrisWheelImg = loadImage('./assets/graphics/foreground/ferrisWheel.png');
+    cabinImg = loadImage('./assets/graphics/foreground/cabinYellow.png');
 
 
 }
@@ -119,6 +119,7 @@
     const rabbit2 = new Rabbit(world,x=1400, y=4140); // Adjust x-coordinate as needed
     const rabbit3 = new Rabbit(world,x=2000, y=3990); // Adjust x-coordinate as needed
 
+    mouse = new Mouse(engine, canvas, {stroke: 'magenta', strokeWeight: 2});
     // Add confetti block
 // Add confetti block
 
@@ -167,7 +168,7 @@
       h: 409,
       image: brownRabbitImg 
     },
-    { isStatic: false, density: 0.0003 }
+    { isStatic: false, density: 0.00008 }
   );
   
   // Constrain the hanging box to a fixed point (create a shorter string)
@@ -259,10 +260,23 @@ Events.on(engine, 'collisionStart', function (event) {
       // Additional handling for sound sensor collision
       console.log('Murmel collided with Sound Sensor');
     }
+
+    // collison with cabin floor results removal of body
+    if (pair.bodyB.label == 'Murmel' && pair.bodyA.label == 'cabin' && wheelTrigger == false) {
+      console.log('Murmel collided with cabin');
+      const second = 8;
+      // wait for 3 seconds
+      wheelTrigger = true;
+      console.log("wait for " + second + " seconds");
+      setTimeout(function(){
+        // remove bodyA from the world
+        World.remove(engine.world, pair.bodyA);
+        console.log("bodyA removed after " + second + " seconds");
+      },1000*second);
+    }
   });
 });
 
-// ... (the rest of your existing code)
 
 // Riesenrad
 let radius = 377;
@@ -282,11 +296,11 @@ for (let i = 0; i < cnt; i++) {
   let x = (radius - 10) * Math.sin((2 * PI * i) / cnt);
   let y = (radius - 10) * Math.cos((2 * PI * i) / cnt);
   // Create left and right cabins
-  let cabinLeft = new Block(world, { x: 3500 + x - 75, y: 560 + y - cabinH, w: cabinW, h: cabinH, color: 'red' }, { isStatic: false });
-  let cabinRight = new Block(world, { x: 3500 + x + 75, y: 560 + y - cabinH, w: cabinW, h: cabinH, color: 'green' }, { isStatic: false });
+  let cabinLeft = new Block(world, { x: 3500 + x - 75, y: 560 + y + cabinH, w: cabinW, h: cabinH, color: 'red' , image: cabinImg, offset:{x:-210/2,y:+105/2-25} }, { isStatic: false,});
+  let cabinRight = new Block(world, { x: 3500 + x + 75, y: 560 + y + cabinH, w: cabinW, h: cabinH, color: 'green' }, { isStatic: false });
 
   // Create a floor for the cabin
-  let cabinFloor = new Block(world, { x: 3500 + x, y: 560 + y + cabinH / 2, w: cabinFloorW, h: cabinW, color: 'white' }, { isStatic: false });
+  let cabinFloor = new Block(world, { x: 3500 + x, y: 560 + y + cabinH / 2, w: cabinFloorW, h: cabinW, color: 'white'}, { isStatic: false, label: 'cabin'  });
 
   // Constrain left and right cabins to 'rad'
   cabinLeft.constrainTo(rad, { pointA: { x: 0, y: cabinH / 2 }, pointB: { x: x, y: y }, stiffness: 0.1, damping: 0.12, draw: true, length: cabinH });
@@ -305,9 +319,6 @@ for (let i = 0; i < cnt; i++) {
   blocks.push(cabinRight);
   blocks.push(cabinFloor);
 }
-
-// ...
-
   
 
     const trampoline1 = new Block(
@@ -366,7 +377,6 @@ for (let i = 0; i < cnt; i++) {
       }
     );
     trampolines.push(trampoline4);
-    
 
 
 
@@ -466,7 +476,7 @@ for (let i = 0; i < cnt; i++) {
       trampoline.draw();
     });
     
-
+    mouse.draw();
     }
 
 
