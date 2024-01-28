@@ -169,7 +169,7 @@
       h: 409,
       image: brownRabbitImg 
     },
-    { isStatic: false, density: 0.00008 }
+    { isStatic: false, density: 0.0001 }
   );
   
   // Constrain the hanging box to a fixed point (create a shorter string)
@@ -439,7 +439,7 @@ blocks.push(rad);
   
       if (pressDuration < spacebarLongPressThreshold) {
         // Apply force continuously while space key is held down
-        Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 0.25, y: 0 });
+        Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 0.1, y: 0 });
         if (!spacebarPressedTime) {
           // Record the start time of spacebar press
           spacebarPressedTime = millis();
@@ -447,7 +447,7 @@ blocks.push(rad);
       } else {
         // Handle long-press behavior here
         // For example, you can make the ball speed up more
-        Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 0.25, y: 0 });
+        Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 0.1, y: 0 });
         if (!spacebarPressedTime) {
           // Record the start time of spacebar press
           spacebarPressedTime = millis();
