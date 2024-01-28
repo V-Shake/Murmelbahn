@@ -169,7 +169,7 @@
       h: 409,
       image: brownRabbitImg 
     },
-    { isStatic: false, density: 0.0001 }
+    { isStatic: false, density: 0.0003 }
   );
   
   // Constrain the hanging box to a fixed point (create a shorter string)
@@ -401,7 +401,7 @@ blocks.push(rad);
 
         if (active === -1) {
           active = 0;
-          murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, friction: 0, frictionAir: 0 });
+          murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, friction: 0.05, frictionAir: 0 });
 
           blocks.unshift(murmel);
         } else {
