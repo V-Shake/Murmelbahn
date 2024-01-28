@@ -26,7 +26,8 @@
   let trampolines = [];
   let confettiBlock;
   let endBell;
-
+  let spacebarPressedTime;
+  let spacebarLongPressThreshold = 500;
 
 
   let canvasElem;
@@ -262,11 +263,11 @@ Events.on(engine, 'collisionStart', function (event) {
     }
 
     // collison with cabin floor results removal of body
-    if (pair.bodyB.label == 'Murmel' && pair.bodyA.label == 'cabin' && wheelTrigger == false) {
+    if (pair.bodyB.label == 'Murmel' && pair.bodyA.label == 'cabin') {
       console.log('Murmel collided with cabin');
-      const second = 8;
+      const second = 9;
       // wait for 3 seconds
-      wheelTrigger = true;
+      // wheelTrigger = true;
       console.log("wait for " + second + " seconds");
       setTimeout(function(){
         // remove bodyA from the world
@@ -285,7 +286,7 @@ rad = new Ball(
   { x: 600, y: 4938, r: radius, image: ferrisWheelImg},
   { isStatic: false, isSensor: true, angle: wheelAngle }
 );
-blocks.push(rad);
+
 rad.constrainTo(null, { pointB: { x: 600, y: 4938 }, stiffness: 0.1, damping: 0.1, draw: false });
 
 cnt = 6;
@@ -296,15 +297,15 @@ for (let i = 0; i < cnt; i++) {
   let x = (radius - 10) * Math.sin((2 * PI * i) / cnt);
   let y = (radius - 10) * Math.cos((2 * PI * i) / cnt);
   // Create left and right cabins
-  let cabinLeft = new Block(world, { x: 3500 + x - 75, y: 560 + y + cabinH, w: cabinW, h: cabinH, color: 'red' , image: cabinImg, offset:{x:-210/2,y:+105/2-25} }, { isStatic: false,});
-  let cabinRight = new Block(world, { x: 3500 + x + 75, y: 560 + y + cabinH, w: cabinW, h: cabinH, color: 'green' }, { isStatic: false });
+  let cabinLeft = new Block(world, { x: 3500 + x - 75, y: 560 + y + cabinH, w: cabinW, h: cabinH, xcolor: 'red' , image: cabinImg, offset:{x:-210/2,y:+105/2-25} }, { isStatic: false,});
+  let cabinRight = new Block(world, { x: 3500 + x + 75, y: 560 + y + cabinH, w: cabinW, h: cabinH, xcolor: 'green' }, { isStatic: false });
 
   // Create a floor for the cabin
-  let cabinFloor = new Block(world, { x: 3500 + x, y: 560 + y + cabinH / 2, w: cabinFloorW, h: cabinW, color: 'white'}, { isStatic: false, label: 'cabin'  });
+  let cabinFloor = new Block(world, { x: 3500 + x, y: 560 + y + cabinH / 2, w: cabinFloorW, h: cabinW, xcolor: 'white'}, { isStatic: false, label: 'cabin'  });
 
   // Constrain left and right cabins to 'rad'
-  cabinLeft.constrainTo(rad, { pointA: { x: 0, y: cabinH / 2 }, pointB: { x: x, y: y }, stiffness: 0.1, damping: 0.12, draw: true, length: cabinH });
-  cabinRight.constrainTo(rad, { pointA: { x: 0, y: cabinH / 2 }, pointB: { x: x, y: y }, stiffness: 0.1, damping: 0.12, draw: true, length: cabinH });
+  cabinLeft.constrainTo(rad, { pointA: { x: 0, y: cabinH / 2 }, pointB: { x: x, y: y }, stiffness: 0.1, damping: 0.12, draw: false, length: cabinH });
+  cabinRight.constrainTo(rad, { pointA: { x: 0, y: cabinH / 2 }, pointB: { x: x, y: y }, stiffness: 0.1, damping: 0.12, draw: false, length: cabinH });
 
   cabinLeft.constrainTo(cabinRight, { pointA: { x: -cabinW, y: 0 }, pointB: { x: cabinW, y: 0 }, stiffness: 0.8, damping: 0.12, draw: false, length: cabinFloorW });
 
@@ -320,6 +321,8 @@ for (let i = 0; i < cnt; i++) {
   blocks.push(cabinFloor);
 }
   
+blocks.push(rad);
+
 
     const trampoline1 = new Block(
       world,
@@ -400,10 +403,10 @@ for (let i = 0; i < cnt; i++) {
           active = 0;
           murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, xfriction: 0, frictionAir: 0 });
 
-          blocks.push(murmel);
-        } else {
-          Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 2, y: 0 });
-          keyPressedSound.play();
+          blocks.unshift(murmel);
+        // } else {
+        //   Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 2, y: 0 });
+        //   keyPressedSound.play();
         }
         break;
       case 65:
@@ -426,10 +429,35 @@ for (let i = 0; i < cnt; i++) {
     scrollEndless(murmel ? murmel.body.position : { x: 0, y: 0 });
     //animateRabbit(); // Add this line to continuously update the rabbit's position
 
-    if (spacePressed && murmel) {
-      Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction, y: 0 });
-      spacePressed = false;
+    // if (spacePressed && murmel) {
+    //   Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction, y: 0 });
+    //   spacePressed = false;
+    // }
+
+    if (keyIsPressed && keyCode === 32) {
+      let pressDuration = millis() - spacebarPressedTime;
+  
+      if (pressDuration < spacebarLongPressThreshold) {
+        // Apply force continuously while space key is held down
+        Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 0.25, y: 0 });
+        if (!spacebarPressedTime) {
+          // Record the start time of spacebar press
+          spacebarPressedTime = millis();
+        }
+      } else {
+        // Handle long-press behavior here
+        // For example, you can make the ball speed up more
+        Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 0.25, y: 0 });
+        if (!spacebarPressedTime) {
+          // Record the start time of spacebar press
+          spacebarPressedTime = millis();
+        }
+      }
+    } else {
+      // Reset the spacebarPressedTime when the space key is released
+      spacebarPressedTime = null;
     }
+  
 
     if (murmel && murmel.draw) {
       image(ballOverlay, murmel.body.position.x, murmel.body.position.y) 
