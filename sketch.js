@@ -115,10 +115,17 @@
 
     createFallingBook(1900, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1600, 1376, { force: { x: 0, y: 0.005 } }, false);
+<<<<<<< HEAD
     createFallingBook(1300, 1376, { force: { x: 0, y: 0.005 } }, false);
     const rabbit1 = new Rabbit(world,x=800, y=4050);
     const rabbit2 = new Rabbit(world,x=1400, y=4140); // Adjust x-coordinate as needed
     const rabbit3 = new Rabbit(world,x=2000, y=3990); // Adjust x-coordinate as needed
+=======
+    createFallingBook(1400, 1376, { force: { x: 0, y: 0.005 } }, false);
+    const rabbit1 = new Rabbit(world,x=800, y=4050, speed=4);
+    const rabbit2 = new Rabbit(world,x=1400, y=4160, speed=6); // Adjust x-coordinate as needed
+    const rabbit3 = new Rabbit(world,x=2000, y=3990, speed=4); // Adjust x-coordinate as needed
+>>>>>>> 08019f153986dcbd78ce9c27709cf737caba8507
 
     mouse = new Mouse(engine, canvas, {stroke: 'magenta', strokeWeight: 2});
     // Add confetti block
@@ -404,9 +411,9 @@ blocks.push(rad);
           murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0013, restitution: 0.3, friction: 0, frictionAir: 0 });
 
           blocks.unshift(murmel);
-        // } else {
-        //   Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 2, y: 0 });
-        //   keyPressedSound.play();
+        } else {
+          Matter.Body.applyForce(murmel.body, murmel.body.position, { x: direction * 2, y: 0 });
+          keyPressedSound.play();
         }
         break;
       case 65:

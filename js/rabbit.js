@@ -3,10 +3,10 @@ const rabbitWidth = 141*resize;
 const rabbitHeight = 301*resize;
 const rabbitStartY = 3930;
 const rabbitEndY = 4170;
-const rabbitSpeed = 3.5;
+const rabbitSpeed = 4;
 
 class Rabbit extends Block {
-  constructor(world,x,y, options = {}) {
+  constructor(world,x,y, speed, options = {}) {
     super(world,
       {x: x, y: y, w: rabbitWidth, h: rabbitHeight, image: rabbitImg},
       { isStatic: true, ...options }
@@ -15,7 +15,7 @@ class Rabbit extends Block {
     // Individual properties for each rabbit
     this.startY = options.startY || rabbitStartY;
     this.endY = options.endY || rabbitEndY;
-    this.speed = options.speed || 4;
+    this.speed = speed || rabbitSpeed;
   }
 
   animate() {
