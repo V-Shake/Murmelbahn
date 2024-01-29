@@ -326,7 +326,7 @@ blocks.push(rad);
 
     const trampoline1 = new Block(
       world,
-      { x: 3460, y: 6170, w: 500, h: 150},
+      { x: 3460, y: 6200, w: 500, h: 50},
       {
         isStatic: true,
         restitution: 1.1,
@@ -340,7 +340,7 @@ blocks.push(rad);
   
     const trampoline2 = new Block(
       world,
-      { x: 2630, y: 6170, w: 500, h: 100},
+      { x: 2630, y: 6200, w: 500, h: 50},
       {
         isStatic: true,
         restitution: 1.1,
@@ -355,7 +355,7 @@ blocks.push(rad);
 
     const trampoline3 = new Block(
       world,
-      { x: 1575, y: 6170, w: 500, h: 100 },
+      { x: 1575, y: 6200, w: 500, h: 50 },
       {
         isStatic: true,
         restitution: 1.1,
