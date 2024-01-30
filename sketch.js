@@ -266,7 +266,7 @@ Events.on(engine, 'collisionStart', function (event) {
     if (pair.bodyB.label == 'Murmel' && pair.bodyA.label == 'cabin') {
       console.log('Murmel collided with cabin');
       const second = 9;
-      // wait for 3 seconds
+      // wait for 9 seconds
       // wheelTrigger = true;
       console.log("wait for " + second + " seconds");
       setTimeout(function(){
@@ -326,7 +326,7 @@ blocks.push(rad);
 
     const trampoline1 = new Block(
       world,
-      { x: 3460, y: 6200, w: 500, h: 50},
+      { x: 3460, y: 6200, w: 500, h: 80},
       {
         isStatic: true,
         restitution: 1.1,
