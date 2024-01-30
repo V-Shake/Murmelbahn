@@ -116,9 +116,9 @@
     createFallingBook(1900, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1600, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1400, 1376, { force: { x: 0, y: 0.005 } }, false);
-    const rabbit1 = new Rabbit(world,x=800, y=4050, speed=4);
-    const rabbit2 = new Rabbit(world,x=1400, y=4160, speed=6); // Adjust x-coordinate as needed
-    const rabbit3 = new Rabbit(world,x=2000, y=3990, speed=4); // Adjust x-coordinate as needed
+    const rabbit1 = new Rabbit(world,x=800, y=4050, speedFactor=4);
+    const rabbit2 = new Rabbit(world,x=1400, y=4160, speedFactor=6); // Adjust x-coordinate as needed
+    const rabbit3 = new Rabbit(world,x=2000, y=3990, speedFactor=4); // Adjust x-coordinate as needed
 
     mouse = new Mouse(engine, canvas, {stroke: 'magenta', strokeWeight: 2});
     // Add confetti block
