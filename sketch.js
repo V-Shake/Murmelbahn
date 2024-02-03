@@ -117,7 +117,7 @@
     createFallingBook(1600, 1376, { force: { x: 0, y: 0.005 } }, false);
     createFallingBook(1400, 1376, { force: { x: 0, y: 0.005 } }, false);
     const rabbit1 = new Rabbit(world,x=800, y=4050, speedFactor=4);
-    const rabbit2 = new Rabbit(world,x=1400, y=4160, speedFactor=6); // Adjust x-coordinate as needed
+    const rabbit2 = new Rabbit(world,x=1400, y=4160, speedFactor=5.5); // Adjust x-coordinate as needed
     const rabbit3 = new Rabbit(world,x=2000, y=3990, speedFactor=4); // Adjust x-coordinate as needed
 
     mouse = new Mouse(engine, canvas, {stroke: 'magenta', strokeWeight: 2});
@@ -401,7 +401,7 @@ blocks.push(rad);
 
         if (active === -1) {
           active = 0;
-          murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, friction: 0.05, frictionAir: 0 });
+          murmel = new Ball(world, { x: 300, y: 100, r: 75, image: ballSVG }, { label: "Murmel", density: 0.0015, restitution: 0.3, friction: 0.02, frictionAir: 0 });
 
           blocks.unshift(murmel);
         } else {
